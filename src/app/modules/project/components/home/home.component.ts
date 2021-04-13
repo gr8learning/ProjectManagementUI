@@ -1,15 +1,9 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { IProject } from '../../interfaces/iproject';
 
-export interface PeriodicElement {
-  name: string;
-  id: number;
-  detail: string;
-  createdOn: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
+const PROJECT_DATA: IProject[] = [
   { id: 1, name: 'Hydrogen', detail: 'Project Detail', createdOn: 'Tue, 13 Apr 2021 08:58:07 GMT' },
   { id: 2, name: 'Helium', detail: 'Project Detail', createdOn: 'Tue, 13 Apr 2021 08:58:07 GMT' },
   { id: 3, name: 'Lithium', detail: 'Project Detail', createdOn: 'Tue, 13 Apr 2021 08:58:07 GMT' },
@@ -30,7 +24,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class HomeComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['id', 'name', 'detail', 'createdOn', 'actions'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource(PROJECT_DATA);
   @ViewChild(MatSort) sort: MatSort;
 
   constructor() {

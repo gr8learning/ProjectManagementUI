@@ -2,16 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../../shared/services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { ITask } from '../../interfaces/itask';
 
-export interface TaskElement {
-  detail: string;
-  id: number;
-  status: string;
-  assignedToUser: string;
-  createdOn: string;
-}
-
-const ELEMENT_DATA: TaskElement[] = [
+const TASK_DATA: ITask[] = [
   {id: 1, detail: 'Detail 1', status: 'new', assignedToUser: 'Nitin', createdOn: 'Tue, 13 Apr 2021 08:49:23 GMT'},
   {id: 2, detail: 'Detail 2', status: 'new', assignedToUser: 'Nitin', createdOn: 'Tue, 13 Apr 2021 08:49:23 GMT'},
   {id: 3, detail: 'Detail 3', status: 'new', assignedToUser: 'Nitin', createdOn: 'Tue, 13 Apr 2021 08:49:23 GMT'},
@@ -33,7 +26,7 @@ const ELEMENT_DATA: TaskElement[] = [
 export class HomeComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['id', 'detail', 'status', 'assignedToUser', 'createdOn', 'actions'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource(TASK_DATA);
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public auth: AuthService) {

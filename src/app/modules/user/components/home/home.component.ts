@@ -2,15 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../../shared/services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { IUser } from '../../interfaces/iuser';
 
-export interface PeriodicElement {
-  firstName: string;
-  id: number;
-  lastName: string;
- email: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
+const USER_DATA: IUser[] = [
   { id: 1, firstName: 'Hydrogen', lastName: 'Kumar', email: 'nitinkumar9054@gmail.com' },
   { id: 2, firstName: 'Helium', lastName: 'Kumar', email: 'nitinkumar9054@gmail.com' },
   { id: 3, firstName: 'Lithium', lastName: 'Kumar', email: 'nitinkumar9054@gmail.com' },
@@ -31,7 +25,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class HomeComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'actions'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource(USER_DATA);
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public auth: AuthService) {
