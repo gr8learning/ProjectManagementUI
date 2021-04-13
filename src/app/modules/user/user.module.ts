@@ -3,6 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
 import { HomeComponent } from './components/home/home.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatRippleModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -12,7 +17,12 @@ import { HomeComponent } from './components/home/home.component';
   ],
   imports: [
     CommonModule,
-    UserRoutingModule
+    UserRoutingModule,
+    MatTableModule,
+    MatSortModule,
+    MatIconModule,
+    FlexLayoutModule,
+    MatRippleModule
   ]
 })
 export class UserModule { }

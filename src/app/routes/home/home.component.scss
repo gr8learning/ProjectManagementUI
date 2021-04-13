@@ -1,0 +1,13 @@
+.go-to-modules {
+  li {
+    list-style-type: none;
+  }
+}
+
+.active-link {
+    background-color: rgba(0,0,0,0.2);
+}
+
+mat-list-item:focus {
+  outline: none;
+}

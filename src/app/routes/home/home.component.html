@@ -1,2 +1,25 @@
-<p>home works!</p>
-<router-outlet></router-outlet>
+<div class="container">
+  <div class="module-selector" fxHide>
+    <mat-form-field appearance="fill">
+      <mat-label>Select an option</mat-label>
+      <mat-select [(value)]="selectedModule">
+        <mat-option disabled>None</mat-option>
+        <mat-option value="option1">Option 1</mat-option>
+        <mat-option value="option2">Option 2</mat-option>
+        <mat-option value="option3">Option 3</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row wrap">
+    <div class="go-to-modules" fxFlex="20%">
+      <mat-list>
+        <mat-list-item mat-ripple routerLink="user" routerLinkActive="active-link">Users</mat-list-item>
+        <mat-list-item mat-ripple routerLink="project" routerLinkActive="active-link">Projects</mat-list-item>
+        <mat-list-item mat-ripple routerLink="task" routerLinkActive="active-link">Tasks</mat-list-item>
+      </mat-list>
+    </div>
+    <div fxFlex="100%" fxFlex.gt-sm="80%">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
