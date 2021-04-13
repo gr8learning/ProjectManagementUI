@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './routes/home/home.component';
 import { NoModuleSelectedComponent } from './components/no-module-selected/no-module-selected.component';
+import { NotFoundComponent } from './modules/shared/components/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
       { path: 'project', loadChildren: () => import('./modules/project/project.module').then(m => m.ProjectModule) }
     ]
   },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

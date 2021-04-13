@@ -1,21 +1,21 @@
 <div class="container">
-  <div class="module-selector" fxHide>
+  <div class="module-selector" fxHide.md fxLayoutAlign="center">
     <mat-form-field appearance="fill">
-      <mat-label>Select an option</mat-label>
-      <mat-select [(value)]="selectedModule">
+      <mat-label>Select a section</mat-label>
+      <mat-select [(value)]="selectedModule" (selectionChange)="navigateTo($event.value)">
         <mat-option disabled>None</mat-option>
-        <mat-option value="option1">Option 1</mat-option>
-        <mat-option value="option2">Option 2</mat-option>
-        <mat-option value="option3">Option 3</mat-option>
+        <mat-option value="user">User</mat-option>
+        <mat-option value="project">Project</mat-option>
+        <mat-option value="task">Task</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
   <div fxLayout="row wrap">
-    <div class="go-to-modules" fxFlex="20%">
+    <div class="go-to-modules" fxFlex="20%" fxHide.lt-md>
       <mat-list>
-        <mat-list-item mat-ripple routerLink="user" routerLinkActive="active-link">Users</mat-list-item>
-        <mat-list-item mat-ripple routerLink="project" routerLinkActive="active-link">Projects</mat-list-item>
-        <mat-list-item mat-ripple routerLink="task" routerLinkActive="active-link">Tasks</mat-list-item>
+        <mat-list-item mat-ripple routerLink="user" routerLinkActive="active-link" (click)="updateSelectedModule('user')">Users</mat-list-item>
+        <mat-list-item mat-ripple routerLink="project" routerLinkActive="active-link" (click)="updateSelectedModule('project')">Projects</mat-list-item>
+        <mat-list-item mat-ripple routerLink="task" routerLinkActive="active-link" (click)="updateSelectedModule('task')">Tasks</mat-list-item>
       </mat-list>
     </div>
     <div fxFlex="100%" fxFlex.gt-sm="80%">
