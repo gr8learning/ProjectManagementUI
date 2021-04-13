@@ -9,6 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatRippleModule } from '@angular/material/core';
 import { AddEditComponent } from './components/add-edit/add-edit.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -23,7 +28,12 @@ import { AddEditComponent } from './components/add-edit/add-edit.component';
     MatSortModule,
     MatIconModule,
     FlexLayoutModule,
-    MatRippleModule
+    MatRippleModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatButtonModule
   ]
 })
 export class UserModule { }

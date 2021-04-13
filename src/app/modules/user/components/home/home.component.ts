@@ -26,6 +26,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'actions'];
   dataSource = new MatTableDataSource(USER_DATA);
+  isEditMode = false;
+  isAdd = false;
+  selectedUser: IUser;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public auth: AuthService) {
@@ -42,5 +46,32 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // console.log(item);
     this.dataSource.data.splice(this.dataSource.data.findIndex((value) => value === item), 1);
     this.dataSource._updateChangeSubscription();
+  }
+
+  setSelectedUser(user = {} as IUser ): void {
+    if (!user.id) {
+      this.selectedUser = {} as IUser;
+      this.selectedUser.id = 1 + Math.max(0, ...Array.from(this.dataSource.data, (item) => item.id));
+      this.selectedUser.firstName = '';
+      this.selectedUser.lastName = '';
+      this.selectedUser.email = '';
+      this.isAdd = true;
+    } else {
+      this.selectedUser = user;
+      this.isAdd = false;
+    }
+    this.isEditMode = true;
+  }
+
+  updateUserRecordById(updatedUser: { user: IUser, msg: string }): void {
+    const index = this.dataSource.data.findIndex((value) => value.id === updatedUser.user.id);
+    if (index >= 0) {
+      this.dataSource.data[index] = updatedUser.user;
+    } else if (updatedUser.msg === 'success') {
+      this.dataSource.data.push(updatedUser.user);
+    }
+    this.isAdd = false;
+    this.dataSource._updateChangeSubscription();
+    this.isEditMode = false;
   }
 }

@@ -2,7 +2,8 @@
   <mat-card fxLayoutAlign="center">
     <div class="form-max-width">
       <mat-card-header>
-        <mat-card-title>Edit Project</mat-card-title>
+        <mat-card-title *ngIf="isAdd">Add Project</mat-card-title>
+        <mat-card-title *ngIf="!isAdd">Edit Project</mat-card-title>
       </mat-card-header>
       <mat-card-content fxLayoutGap="20px">
         <mat-form-field ngClass.lt-sm="full-width" appearance="outline">

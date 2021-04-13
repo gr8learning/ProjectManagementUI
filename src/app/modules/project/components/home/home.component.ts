@@ -28,7 +28,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isEditMode = false;
   isAdd = false;
   selectedProject: IProject;
-  updatedProject: IProject;
 
   @ViewChild(MatSort) sort: MatSort;
 

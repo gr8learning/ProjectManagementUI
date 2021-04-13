@@ -29,7 +29,7 @@ export class AddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.projectData);
+    // console.log(this.projectData);
     this.projectForm.setValue({
       name: this.projectData.name,
       detail: this.projectData.detail,
