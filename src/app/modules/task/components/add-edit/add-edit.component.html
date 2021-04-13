@@ -1,1 +1,57 @@
-<p>add-edit works!</p>
+<form class="form-full-width" [formGroup]="taskForm" (ngSubmit)="emitTask()">
+  <mat-card fxLayoutAlign="center">
+    <div class="form-max-width">
+      <mat-card-header>
+        <mat-card-title *ngIf="isAdd">Add Task</mat-card-title>
+        <mat-card-title *ngIf="!isAdd">Edit Task</mat-card-title>
+      </mat-card-header>
+      <mat-card-content fxLayout="column">
+        <div fxLayout="row wrap" fxLayoutGap="20px">
+          <mat-form-field ngClass.lt-sm="full-width" appearance="outline">
+            <mat-label>Project ID</mat-label>
+            <input type="text" matInput formControlName="projectId" [errorStateMatcher]="matcher"
+                   placeholder="Ex. 12" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
+            <mat-hint>Project ID is optional!</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field ngClass.lt-sm="full-width" appearance="outline">
+            <mat-label>Assigned To User</mat-label>
+            <input type="text" matInput formControlName="assignedToUser" [errorStateMatcher]="matcher"
+                   placeholder="Ex. Nitin Kumar" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
+            <mat-hint>Assigned to user is optional!</mat-hint>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" [fxHide]="isAdd">
+          <mat-form-field ngClass.lt-sm="full-width" appearance="outline">
+            <mat-label>Status</mat-label>
+            <input type="text" matInput formControlName="status" [errorStateMatcher]="matcher"
+                   placeholder="Ex. InProgress" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
+            <mat-hint>Status is required!</mat-hint>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Details</mat-label>
+            <input type="text" matInput formControlName="detail" [errorStateMatcher]="matcher"
+                   placeholder="Ex. Create user" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
+            <mat-hint>Task details are required!</mat-hint>
+            <mat-error *ngIf="detail.invalid && (detail.dirty || detail.touched)">
+              <div *ngIf="detail.errors['minlength']; else invalid">
+                Detail must be at least 2 characters long.
+              </div>
+              <ng-template #invalid>
+                Detail is <strong>Invalid</strong>
+              </ng-template>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayoutAlign="space-between center" class="margin-0">
+        <button mat-raised-button type="submit" color="primary" [disabled]="!taskForm.valid" *ngIf="!isAdd">Update
+        </button>
+        <button mat-raised-button type="submit" color="primary" [disabled]="!taskForm.valid" *ngIf="isAdd">Add</button>
+        <button mat-raised-button color="warn" (click)="emitTask(true)">Cancel</button>
+      </mat-card-actions>
+    </div>
+  </mat-card>
+</form>
