@@ -2,8 +2,15 @@
 
 @import "src/assets/scss/variables";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+  //min-width: 320px;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .container {
   padding: 10px 15px;
@@ -13,4 +20,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .font-#{$i}px {
     font-size: ($i) + px;
   }
+}
+
+.margin-0 {
+  margin: 0 !important;
+}
+
+.mat-card-header-text {
+  margin: 0 !important;
 }

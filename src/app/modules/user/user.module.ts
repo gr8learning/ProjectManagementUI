@@ -8,10 +8,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatRippleModule } from '@angular/material/core';
+import { AddEditComponent } from './components/add-edit/add-edit.component';
 
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, AddEditComponent],
   exports: [
     HomeComponent
   ],

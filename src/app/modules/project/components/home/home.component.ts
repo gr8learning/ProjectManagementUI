@@ -25,6 +25,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['id', 'name', 'detail', 'createdOn', 'actions'];
   dataSource = new MatTableDataSource(PROJECT_DATA);
+  isEditMode = false;
+  selectedProject: IProject;
+  updatedProject: IProject;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor() {
@@ -37,9 +41,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  deleteUser(item): void {
+  deleteProject(item: IProject): void {
     // console.log(item);
     this.dataSource.data.splice(this.dataSource.data.findIndex((value) => value === item), 1);
     this.dataSource._updateChangeSubscription();
+  }
+
+  setSelectedProject(project: IProject): void {
+    this.selectedProject = project;
+    this.isEditMode = true;
+  }
+
+  updateProjectRecordById(updatedProject: IProject): void {
+    const index = this.dataSource.data.findIndex((value) => value.id === updatedProject.id);
+    this.dataSource.data[index].name = updatedProject.name;
+    this.dataSource.data[index].detail = updatedProject.detail;
+    this.dataSource._updateChangeSubscription();
+    this.isEditMode = false;
   }
 }
