@@ -9,23 +9,25 @@
         <div fxLayout="row wrap" fxLayoutGap="20px">
           <mat-form-field ngClass.lt-sm="full-width" appearance="outline">
             <mat-label>Project ID</mat-label>
-            <input type="text" matInput formControlName="projectId" [errorStateMatcher]="matcher"
+            <input type="text" matInput formControlName="projectId"
                    placeholder="Ex. 12" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
             <mat-hint>Project ID is optional!</mat-hint>
           </mat-form-field>
 
           <mat-form-field ngClass.lt-sm="full-width" appearance="outline">
             <mat-label>Assigned To User</mat-label>
-            <input type="text" matInput formControlName="assignedToUser" [errorStateMatcher]="matcher"
+            <input type="text" matInput formControlName="assignedToUser"
                    placeholder="Ex. Nitin Kumar" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
             <mat-hint>Assigned to user is optional!</mat-hint>
           </mat-form-field>
         </div>
         <div fxLayout="row" [fxHide]="isAdd">
-          <mat-form-field ngClass.lt-sm="full-width" appearance="outline">
+          <mat-form-field appearance="fill" ngClass.lt-sm="full-width">
             <mat-label>Status</mat-label>
-            <input type="text" matInput formControlName="status" [errorStateMatcher]="matcher"
-                   placeholder="Ex. InProgress" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
+            <mat-select (selectionChange)="setStatus($event.value)">
+              <mat-option disabled>None</mat-option>
+              <mat-option *ngFor="let item of statusOptions;" [value]="item">{{item}}</mat-option>
+            </mat-select>
             <mat-hint>Status is required!</mat-hint>
           </mat-form-field>
         </div>

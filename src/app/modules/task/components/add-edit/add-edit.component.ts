@@ -69,6 +69,10 @@ export class AddEditComponent implements OnInit {
     return this.taskForm.get('status');
   }
 
+  setStatus(value): void {
+    this.taskForm.patchValue({status: value});
+  }
+
   trimValue($event): void {
     $event.target.value = $event.target.value.trim();
   }
