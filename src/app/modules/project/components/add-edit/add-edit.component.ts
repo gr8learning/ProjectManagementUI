@@ -12,7 +12,7 @@ export class AddEditComponent implements OnInit {
 
   @Input() projectData: IProject;
   @Input() isAdd: boolean;
-  @Output() projectDataEmitter = new EventEmitter<IProject>();
+  @Output() projectDataEmitter = new EventEmitter<{ project: IProject, msg: string }>();
 
   projectForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2)]),
@@ -21,7 +21,10 @@ export class AddEditComponent implements OnInit {
 
   autocomplete = 'off';
 
-  get matcher(): any { return new MyErrorStateMatcher(); }
+  get matcher(): any {
+    return new MyErrorStateMatcher();
+  }
+
   constructor() {
   }
 
@@ -38,13 +41,18 @@ export class AddEditComponent implements OnInit {
       id: this.projectData.id,
       name: this.name.value,
       detail: this.detail.value,
-      createdOn: this.isAdd ? new Date().toUTCString() : this.projectForm.value.createdOn
+      createdOn: this.isAdd ? new Date().toUTCString() : this.projectData.createdOn
     };
-    this.projectDataEmitter.emit(isCancel ? this.projectData : item );
+    this.projectDataEmitter.emit({ project: isCancel ? this.projectData : item, msg: isCancel ? 'cancel' : 'success' });
   }
 
-  get name(): any { return this.projectForm.get('name'); }
-  get detail(): any { return this.projectForm.get('detail'); }
+  get name(): any {
+    return this.projectForm.get('name');
+  }
+
+  get detail(): any {
+    return this.projectForm.get('detail');
+  }
 
   trimValue($event): void {
     $event.target.value = $event.target.value.trim();

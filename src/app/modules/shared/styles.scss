@@ -1,5 +1,10 @@
 table {
   width: 100%;
+  td {
+    mat-icon:first-child {
+      margin-right: 15px ;
+    }
+  }
 }
 
 th.mat-sort-header-sorted {

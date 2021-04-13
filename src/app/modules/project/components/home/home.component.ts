@@ -62,13 +62,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.isEditMode = true;
   }
 
-  updateProjectRecordById(updatedProject: IProject): void {
-    const index = this.dataSource.data.findIndex((value) => value.id === updatedProject.id);
+  updateProjectRecordById(updatedProject: {project: IProject, msg: string }): void {
+    const index = this.dataSource.data.findIndex((value) => value.id === updatedProject.project.id);
     if (index >= 0) {
-      this.dataSource.data[index].name = updatedProject.name;
-      this.dataSource.data[index].detail = updatedProject.detail;
-    } else {
-      this.dataSource.data.push(updatedProject);
+      this.dataSource.data[index] = updatedProject.project;
+    } else if (updatedProject.msg === 'success') {
+      this.dataSource.data.push(updatedProject.project);
     }
     this.isAdd = false;
     this.dataSource._updateChangeSubscription();
