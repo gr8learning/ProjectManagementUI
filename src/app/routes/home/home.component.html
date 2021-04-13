@@ -1,6 +1,6 @@
 <div class="container">
   <div class="module-selector" fxHide.md fxHide.gt-md fxLayoutAlign="center">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Select a section</mat-label>
       <mat-select [(value)]="selectedModule" (selectionChange)="navigateTo($event.value)">
         <mat-option disabled>None</mat-option>
@@ -8,8 +8,8 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div fxLayout="row wrap">
-    <div class="go-to-modules" fxFlex="20%" fxHide.lt-md>
+  <div fxLayout="row wrap" fxLayoutAlign="center">
+    <div class="go-to-modules" fxFlex fxHide.lt-md>
       <mat-list>
         <mat-list-item *ngFor="let item of routeItems;" mat-ripple [routerLink]="item.value" routerLinkActive="active-link" (click)="updateSelectedModule(item.value)">{{item.label}}</mat-list-item>
       </mat-list>
