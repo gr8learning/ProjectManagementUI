@@ -9,6 +9,12 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   selectedModule: string;
 
+  routeItems = [
+    {label: 'User', value: 'user'},
+    {label: 'Project', value: 'project'},
+    {label: 'Task', value: 'task'},
+  ];
+
   constructor(private router: Router) {
     this.setSelectedModule();
   }
