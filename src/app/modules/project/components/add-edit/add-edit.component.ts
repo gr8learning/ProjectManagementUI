@@ -38,7 +38,7 @@ export class AddEditComponent implements OnInit {
       id: this.projectData.id,
       name: this.name.value,
       detail: this.detail.value,
-      createdOn: this.projectForm.value.createdOn
+      createdOn: this.isAdd ? new Date().toUTCString() : this.projectForm.value.createdOn
     };
     this.projectDataEmitter.emit(isCancel ? this.projectData : item );
   }

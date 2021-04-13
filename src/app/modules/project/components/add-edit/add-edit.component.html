@@ -36,7 +36,8 @@
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions fxLayoutAlign="space-between center" class="margin-0">
-        <button mat-raised-button type="submit" color="primary" [disabled]="!projectForm.valid">Update</button>
+        <button mat-raised-button type="submit" color="primary" [disabled]="!projectForm.valid" *ngIf="!isAdd">Update</button>
+        <button mat-raised-button type="submit" color="primary" [disabled]="!projectForm.valid" *ngIf="isAdd">Add</button>
         <button mat-raised-button color="warn" (click)="emitProject(true)">Cancel</button>
       </mat-card-actions>
     </div>

@@ -11,7 +11,9 @@
   <div fxLayout="row wrap" fxLayoutAlign="center">
     <div class="go-to-modules" fxFlex fxHide.lt-md>
       <mat-list>
-        <mat-list-item *ngFor="let item of routeItems;" mat-ripple [routerLink]="item.value" routerLinkActive="active-link" (click)="updateSelectedModule(item.value)">{{item.label}}</mat-list-item>
+        <mat-list-item *ngFor="let item of routeItems;" mat-ripple [routerLink]="item.value"
+                       routerLinkActive="active-link"
+                       (click)="updateSelectedModule(item.value)">{{item.label}}</mat-list-item>
       </mat-list>
     </div>
     <div fxFlex="100%" fxFlex.gt-sm="80%">

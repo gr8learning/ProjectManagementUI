@@ -1,9 +1,9 @@
 <div class="container">
   <div *ngIf="isEditMode; else viewData">
-    <app-add-edit-project [projectData]="selectedProject" (projectDataEmitter)="updateProjectRecordById($event)"></app-add-edit-project>
+    <app-add-edit-project [isAdd]="isAdd" [projectData]="selectedProject" (projectDataEmitter)="updateProjectRecordById($event)"></app-add-edit-project>
   </div>
   <ng-template #viewData>
-    <div fxLayout="row" mat-ripple class="add-item">
+    <div fxLayout="row" mat-ripple class="add-item" (click)="setSelectedProject()">
       <mat-icon>add_circle</mat-icon>
       <div>New Project</div>
     </div>
