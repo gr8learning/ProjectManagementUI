@@ -24,7 +24,7 @@
         <div fxLayout="row" [fxHide]="isAdd">
           <mat-form-field appearance="fill" ngClass.lt-sm="full-width">
             <mat-label>Status</mat-label>
-            <mat-select (selectionChange)="setStatus($event.value)">
+            <mat-select formControlName="status">
               <mat-option disabled>None</mat-option>
               <mat-option *ngFor="let item of statusOptions;" [value]="item">{{item}}</mat-option>
             </mat-select>
