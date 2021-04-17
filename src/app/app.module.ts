@@ -33,6 +33,10 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { LoginSignupComponent } from './routes/login-signup/login-signup.component';
+import { ContactComponent } from './routes/contact/contact.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     NavbarComponent,
     SidenavComponent,
     HomeComponent,
-    NoModuleSelectedComponent
+    NoModuleSelectedComponent,
+    LoginSignupComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +78,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTreeModule,
     MatTooltipModule,
     MatOptionModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
