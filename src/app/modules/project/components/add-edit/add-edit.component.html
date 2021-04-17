@@ -1,0 +1,46 @@
+<form class="form-full-width" [formGroup]="projectForm" (ngSubmit)="emitProject()">
+  <mat-card fxLayoutAlign="center">
+    <div class="form-max-width">
+      <mat-card-header>
+        <mat-card-title *ngIf="isAdd">Add Project</mat-card-title>
+        <mat-card-title *ngIf="!isAdd">Edit Project</mat-card-title>
+      </mat-card-header>
+      <mat-card-content fxLayoutGap="20px">
+        <mat-form-field ngClass.lt-sm="full-width" appearance="outline">
+          <mat-label>Name</mat-label>
+          <input type="text" matInput formControlName="name" [errorStateMatcher]="matcher"
+                 placeholder="Ex. My Project" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
+          <mat-hint>Enter project name</mat-hint>
+          <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
+            <div *ngIf="name.errors['minlength']; else invalid">
+              Name must be at least 2 characters long.
+            </div>
+            <ng-template #invalid>
+              Name is <strong>Invalid</strong>
+            </ng-template>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field ngClass.lt-sm="full-width" appearance="outline">
+          <mat-label>Detail</mat-label>
+          <input type="text" matInput formControlName="detail" [errorStateMatcher]="matcher"
+                 placeholder="Ex. Great Learning Project" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
+          <mat-hint>Errors appear instantly!</mat-hint>
+          <mat-error *ngIf="detail.invalid && (detail.dirty || detail.touched)">
+            <div *ngIf="detail.errors['minlength']; else invalid">
+              Detail must be at least 2 characters long.
+            </div>
+            <ng-template #invalid>
+              Detail is <strong>Invalid</strong>
+            </ng-template>
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions fxLayoutAlign="space-between center" class="margin-0">
+        <button mat-raised-button type="submit" color="primary" [disabled]="!projectForm.valid" *ngIf="!isAdd">Update</button>
+        <button mat-raised-button type="submit" color="primary" [disabled]="!projectForm.valid" *ngIf="isAdd">Add</button>
+        <button mat-raised-button color="warn" (click)="emitProject(true)">Cancel</button>
+      </mat-card-actions>
+    </div>
+  </mat-card>
+</form>

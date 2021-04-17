@@ -1,0 +1,14 @@
+.go-to-modules {
+  max-width: 250px;
+  li {
+    list-style-type: none;
+  }
+}
+
+.active-link {
+    background-color: rgba(0,0,0,0.2);
+}
+
+mat-list-item:focus {
+  outline: none;
+}

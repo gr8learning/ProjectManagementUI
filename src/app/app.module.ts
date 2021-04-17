@@ -17,12 +17,38 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { HomeComponent } from './routes/home/home.component';
+import { NoModuleSelectedComponent } from './components/no-module-selected/no-module-selected.component';
+import { MatOptionModule, MatRippleModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { HttpClientModule } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { LoginSignupComponent } from './routes/login-signup/login-signup.component';
+import { ContactComponent } from './routes/contact/contact.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { ProfileComponent } from './routes/profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    SidenavComponent
+    SidenavComponent,
+    HomeComponent,
+    NoModuleSelectedComponent,
+    LoginSignupComponent,
+    ContactComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -32,13 +58,31 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     ProjectModule,
     SharedModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    FlexLayoutModule,
+    MatProgressSpinnerModule,
     MatButtonModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatFormFieldModule,
     MatMenuModule,
     MatIconModule,
     MatListModule,
-    FlexLayoutModule,
+    MatRippleModule,
+    MatTableModule,
     MatToolbarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatTreeModule,
+    MatTooltipModule,
+    MatOptionModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
