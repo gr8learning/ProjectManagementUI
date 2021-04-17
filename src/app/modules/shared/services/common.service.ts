@@ -21,18 +21,23 @@ export class CommonService {
     this.cookie.set('token', btoa(username + ':' + password), 10, '/');
     this.isLoggedIn = true;
     this.name = username;
-    this.router.navigate(['user']);
+    const _ = this.router.navigate(['user']);
   }
 
   logout(): void {
     console.log('logout');
     this.isLoggedIn = false;
     this.clearCookies();
+    const _ = this.router.navigate(['app', 'login']);
   }
 
   clearCookies(): void {
     this.cookie.deleteAll();
     this.cookie.deleteAll('/');
     this.cookie.deleteAll('/*');
+  }
+
+  isUserLoggedIn(): boolean {
+    return this.isLoggedIn || this.cookie.check('username');
   }
 }

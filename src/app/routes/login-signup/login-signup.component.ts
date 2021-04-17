@@ -14,8 +14,8 @@ export class LoginSignupComponent implements OnInit {
   loginType: any;
   hidePass = true;
   loginForm = new FormGroup({
-    username: new FormControl('', [Validators.minLength(3), Validators.maxLength(50)]),
-    secret: new FormControl('', [Validators.minLength(6), Validators.maxLength(40)])
+    username: new FormControl('guest', [Validators.minLength(3), Validators.maxLength(50)]),
+    secret: new FormControl('guestLogin', [Validators.minLength(6), Validators.maxLength(40)])
   });
   signupForm = new FormGroup({
     name: new FormControl('', [Validators.minLength(3), Validators.maxLength(80)]),
