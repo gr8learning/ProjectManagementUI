@@ -37,6 +37,7 @@ import { LoginSignupComponent } from './routes/login-signup/login-signup.compone
 import { ContactComponent } from './routes/contact/contact.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { ProfileComponent } from './routes/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { MatInputModule } from '@angular/material/input';
     HomeComponent,
     NoModuleSelectedComponent,
     LoginSignupComponent,
-    ContactComponent
+    ContactComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

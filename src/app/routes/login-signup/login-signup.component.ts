@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MyErrorStateMatcher } from '../../modules/shared/handlers/error-state-matcher';
+import { CommonService } from '../../modules/shared/services/common.service';
 
 @Component({
   selector: 'app-login-signup',
@@ -29,7 +30,7 @@ export class LoginSignupComponent implements OnInit {
     return new MyErrorStateMatcher();
   }
 
-  constructor(private routes: ActivatedRoute) { }
+  constructor(private routes: ActivatedRoute, private common: CommonService) { }
 
   ngOnInit(): void {
     this.routes.data.subscribe(data => {
@@ -38,6 +39,7 @@ export class LoginSignupComponent implements OnInit {
   }
 
   login(): any {
+    this.common.login(this.usernameLogin.value, this.passwordLogin.value);
   }
 
   signup(): any {

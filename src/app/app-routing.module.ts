@@ -5,6 +5,7 @@ import { NoModuleSelectedComponent } from './components/no-module-selected/no-mo
 import { NotFoundComponent } from './modules/shared/components/not-found/not-found.component';
 import { LoginSignupComponent } from './routes/login-signup/login-signup.component';
 import { ContactComponent } from './routes/contact/contact.component';
+import { ProfileComponent } from './routes/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,8 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'login' },
       { path: 'login', component: LoginSignupComponent, data: { type: 'login' } },
       { path: 'signup', component: LoginSignupComponent, data: { type: 'signup' } },
-      { path: 'contact', component: ContactComponent }
+      { path: 'contact', component: ContactComponent },
+      { path: 'profile', component: ProfileComponent }
     ]
   },
   { path: '**', component: NotFoundComponent }
