@@ -14,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { GlobalService } from '../shared/services/global.service';
+import { RequestService } from './services/request.service';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule
-  ]
+  ],
+  providers: [GlobalService, RequestService]
 })
 export class UserModule { }

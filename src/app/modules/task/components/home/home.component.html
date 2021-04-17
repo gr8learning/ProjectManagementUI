@@ -1,6 +1,6 @@
 <div class="container">
   <div *ngIf="isEditMode; else viewData">
-    <app-add-edit-task [isAdd]="isAdd" [taskData]="selectedTask"
+    <app-add-edit-task [projectList]="projectList" [userList]="userList" [isAdd]="isAdd" [taskData]="selectedTask"
                        (taskDataEmitter)="updateTaskRecordById($event)"></app-add-edit-task>
   </div>
   <ng-template #viewData>
@@ -9,7 +9,7 @@
       <div>New Task</div>
     </div>
     <div fxLayout="row" ngClass.lt-md="overflow-scroll">
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <table mat-table [dataSource]="request.dataSource" matSort class="mat-elevation-z8">
 
         <!-- Position Column -->
         <ng-container matColumnDef="id">
@@ -19,14 +19,14 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="projectId">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> ProjectId</th>
-          <td mat-cell *matCellDef="let element"> {{element.projectId}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Project</th>
+          <td mat-cell *matCellDef="let element"> {{getProjectById(element.projectId)}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="assignedToUser">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> AssignedToUser</th>
-          <td mat-cell *matCellDef="let element"> {{element.assignedToUser}} </td>
+          <td mat-cell *matCellDef="let element"> {{getUserById(element.assignedToUserId)}} </td>
         </ng-container>
 
         <!-- Name Column -->

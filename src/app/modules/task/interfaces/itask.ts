@@ -3,6 +3,6 @@ export interface ITask {
   detail: string;
   id: number;
   status: string;
-  assignedToUser: string;
+  assignedToUserId: number;
   createdOn: string;
 }

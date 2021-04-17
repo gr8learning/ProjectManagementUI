@@ -14,6 +14,8 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { GlobalService } from '../shared/services/global.service';
+import { RequestService } from './services/request.service';
 
 
 @NgModule({
@@ -31,6 +33,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule
-  ]
+  ],
+  providers: [GlobalService, RequestService]
 })
-export class ProjectModule { }
+export class ProjectModule {
+}

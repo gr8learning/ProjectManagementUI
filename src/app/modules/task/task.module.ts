@@ -15,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { GlobalService } from '../shared/services/global.service';
+import { RequestService } from './services/request.service';
 
 
 @NgModule({
@@ -36,6 +38,7 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
     MatButtonModule,
     MatSelectModule
-  ]
+  ],
+  providers: [GlobalService, RequestService]
 })
 export class TaskModule { }
