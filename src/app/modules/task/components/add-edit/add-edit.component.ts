@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../../../shared/handlers/error-state-matcher';
 import { IIdValue } from '../../../shared/interfaces/iidvalue';
 import { RequestService } from '../../services/request.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-add-edit-task',
@@ -33,13 +34,10 @@ export class AddEditComponent implements OnInit {
     return new MyErrorStateMatcher();
   }
 
-  constructor(private request: RequestService) { }
+  constructor(private request: RequestService, private snackbarService: SnackbarService) { }
 
   ngOnInit(): void {
-    // console.log(this.userData);
-    // console.log(this.userList);
-    // console.log(this.projectList);
-    this.taskForm.setValue({
+    this.taskForm.patchValue({
       projectID: this.taskData.projectID,
       detail: this.taskData.detail,
       status: this.taskData.status,
@@ -47,9 +45,7 @@ export class AddEditComponent implements OnInit {
     });
     this.request.getTaskById(this.taskData.id, (resp) => {
       if (resp.status === 200) {
-        this.taskForm.setValue(resp.body);
-      } else {
-        console.log('Failed to get task details by id');
+        this.taskForm.patchValue(resp.body);
       }
     });
   }
@@ -98,8 +94,9 @@ export class AddEditComponent implements OnInit {
     this.request.addTask(item, (resp) => {
       if (resp.status === 200) {
         this.taskDataEmitter.emit({ task: resp.body, msg: 'success' });
+        this.snackbarService.openMessageSnackbar('Task added successfully');
       } else {
-        console.log('Failed to add task');
+        this.snackbarService.openMessageSnackbar('Failed to add task');
       }
     });
   }
@@ -115,8 +112,9 @@ export class AddEditComponent implements OnInit {
     this.request.updateTask(item, (resp) => {
       if (resp.status === 200) {
         this.taskDataEmitter.emit({ task: resp.body, msg: 'success' });
+        this.snackbarService.openMessageSnackbar('Task updated successfully');
       } else {
-        console.log('Failed to update task details');
+        this.snackbarService.openMessageSnackbar('Failed to update task details');
       }
     });
   }

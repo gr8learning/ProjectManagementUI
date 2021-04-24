@@ -4,6 +4,7 @@ import { IProject } from '../../interfaces/iproject';
 import { RequestService } from '../../services/request.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogService } from '../../../shared/services/dialog.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-home-project',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public request: RequestService, private dialogService: DialogService) {
+  constructor(public request: RequestService, private dialogService: DialogService, private snackbarService: SnackbarService) {
   }
 
   ngOnInit(): void {
@@ -35,13 +36,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   deleteProject(item: IProject): void {
-    // console.log(item);
     this.request.deleteProjectById(item.id, (resp) => {
       if (resp.status === 200) {
         this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
         this.request.dataSource._updateChangeSubscription();
+        this.snackbarService.openMessageSnackbar('Project deleted successfully');
       } else {
-        console.log('Failed to delete project by id');
+        this.snackbarService.openMessageSnackbar('Failed to delete project by id');
       }
     });
   }
@@ -79,8 +80,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
           if (deleteResp.status === 200) {
             this.request.dataSource = new MatTableDataSource([]);
             this.request.dataSource._updateChangeSubscription();
+            this.snackbarService.openMessageSnackbar('All project deleted successfully');
           } else {
-            console.log('Failed to delete all task');
+            this.snackbarService.openMessageSnackbar('Failed to delete all project');
           }
         });
       }

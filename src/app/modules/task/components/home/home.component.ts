@@ -8,6 +8,7 @@ import { RequestService as UserRequestService } from '../../../user/services/req
 import { IIdValue } from '../../../shared/interfaces/iidvalue';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogService } from '../../../shared/services/dialog.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-home-task',
@@ -26,10 +27,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public auth: AuthService, public request: RequestService, private projectRequest: ProjectRequestService,
-              private userRequest: UserRequestService, private dialogService: DialogService) {
-    auth.name = 'Nitin Kumar';
-  }
+  constructor(public request: RequestService, private projectRequest: ProjectRequestService,
+              private userRequest: UserRequestService, private dialogService: DialogService, private snackbarService: SnackbarService) { }
 
   ngOnInit(): void {
     this.projectRequest.getAllProject((resp) => {
@@ -39,9 +38,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         });
       }
     });
-    // this.projectRequest.dataSource.data.forEach((value) => {
-    //   this.projectList[value.id] = value.name;
-    // });
 
     this.userRequest.getAllUser((resp) => {
       if (resp.status === 200) {
@@ -50,9 +46,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         });
       }
     });
-    // this.userRequest.dataSource.data.forEach((value) => {
-    //   this.userList[value.id] = value.firstName + ' ' + value.lastName.toUpperCase();
-    // });
   }
 
   ngAfterViewInit(): void {
@@ -64,12 +57,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  deleteUser(item): void {
-    // console.log(item);
+  deleteTask(item): void {
     this.request.deleteTaskById(item.id, (resp) => {
       if (resp.status === 200) {
         this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
         this.request.dataSource._updateChangeSubscription();
+        this.snackbarService.openMessageSnackbar('Task deleted successfully');
+      } else {
+        this.snackbarService.openMessageSnackbar('Failed to delete task');
       }
     });
   }
@@ -117,8 +112,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
           if (deleteResp.status === 200) {
             this.request.dataSource = new MatTableDataSource([]);
             this.request.dataSource._updateChangeSubscription();
+            this.snackbarService.openMessageSnackbar('All task deleted successfully');
           } else {
-            console.log('Failed to delete all task');
+            this.snackbarService.openMessageSnackbar('Failed to delete all task');
           }
         });
       }

@@ -4,6 +4,7 @@ import { IUser } from '../../interfaces/iuser';
 import { RequestService } from '../../services/request.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogService } from '../../../shared/services/dialog.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-home-user',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public request: RequestService, private dialogService: DialogService) {
+  constructor(public request: RequestService, private dialogService: DialogService, private snackbarService: SnackbarService) {
   }
 
   ngOnInit(): void {
@@ -35,13 +36,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   deleteUser(item): void {
-    // console.log(item);
     this.request.deleteUserById(item.id, (resp) => {
       if (resp.status === 200) {
         this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
         this.request.dataSource._updateChangeSubscription();
+        this.snackbarService.openMessageSnackbar('User deleted successfully');
       } else {
-        console.log('Failed to delete by id');
+        this.snackbarService.openMessageSnackbar('Failed to delete user');
       }
     });
   }
@@ -80,8 +81,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
           if (deleteResp.status === 200) {
             this.request.dataSource = new MatTableDataSource([]);
             this.request.dataSource._updateChangeSubscription();
+            this.snackbarService.openMessageSnackbar('All users deleted successfully');
           } else {
-            console.log('Failed to delete all user');
+            this.snackbarService.openMessageSnackbar('Failed to delete all user');
           }
         });
       }

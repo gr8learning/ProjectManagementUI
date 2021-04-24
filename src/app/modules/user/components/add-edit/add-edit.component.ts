@@ -3,6 +3,7 @@ import { IUser } from '../../interfaces/iuser';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../../../shared/handlers/error-state-matcher';
 import { RequestService } from '../../services/request.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -27,12 +28,11 @@ export class AddEditComponent implements OnInit {
     return new MyErrorStateMatcher();
   }
 
-  constructor(private request: RequestService) {
+  constructor(private request: RequestService, private snackbarService: SnackbarService) {
   }
 
   ngOnInit(): void {
-    // console.log(this.userData);
-    this.userForm.setValue({
+    this.userForm.patchValue({
       firstName: this.userData.firstName,
       lastName: this.userData.lastName,
       email: this.userData.email
@@ -40,9 +40,7 @@ export class AddEditComponent implements OnInit {
     if (!this.isAdd) {
       this.request.getUserById(this.userData.id, (resp) => {
         if (resp.status === 200) {
-          this.userForm.setValue(resp.body);
-        } else {
-          console.log('Failed to load user details by id');
+          this.userForm.patchValue(resp.body);
         }
       });
     }
@@ -83,8 +81,9 @@ export class AddEditComponent implements OnInit {
     this.request.addUser(item, (resp) => {
       if (resp.status === 200) {
         this.userDataEmitter.emit({ user: resp.body, msg: 'success' });
+        this.snackbarService.openMessageSnackbar('User added successfully');
       } else {
-        console.log('Failed to add user');
+        this.snackbarService.openMessageSnackbar('Failed to add user');
       }
     });
   }
@@ -99,8 +98,9 @@ export class AddEditComponent implements OnInit {
     this.request.updateUser(item, (resp) => {
       if (resp.status === 200) {
         this.userDataEmitter.emit({ user: resp.body, msg: 'success' });
+        this.snackbarService.openMessageSnackbar('User updated successfully');
       } else {
-        console.log('Failed to update user');
+        this.snackbarService.openMessageSnackbar('Failed to update user');
       }
     });
   }

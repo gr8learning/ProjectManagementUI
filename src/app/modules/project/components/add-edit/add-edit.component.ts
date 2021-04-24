@@ -3,6 +3,7 @@ import { IProject } from '../../interfaces/iproject';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../../../shared/handlers/error-state-matcher';
 import { RequestService } from '../../services/request.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-add-edit-project',
@@ -26,11 +27,10 @@ export class AddEditComponent implements OnInit {
     return new MyErrorStateMatcher();
   }
 
-  constructor(private request: RequestService) {
+  constructor(private request: RequestService, private snackbarService: SnackbarService) {
   }
 
   ngOnInit(): void {
-    // console.log(this.projectData);
     this.projectForm.setValue({
       name: this.projectData.name,
       detail: this.projectData.detail,
@@ -74,8 +74,9 @@ export class AddEditComponent implements OnInit {
     this.request.addProject(item, (resp) => {
       if (resp.status === 200) {
         this.projectDataEmitter.emit({ project: resp.body, msg: 'success' });
+        this.snackbarService.openMessageSnackbar('Project added successfully');
       } else {
-        console.log('Failed to add project');
+        this.snackbarService.openMessageSnackbar('Failed to add project');
       }
     });
   }
@@ -90,8 +91,9 @@ export class AddEditComponent implements OnInit {
     this.request.updateProject(item, (resp) => {
       if (resp.status === 200) {
         this.projectDataEmitter.emit({ project: resp.body, msg: 'success' });
+        this.snackbarService.openMessageSnackbar('Project updated successfully');
       } else {
-        console.log('Failed to update project');
+        this.snackbarService.openMessageSnackbar('Failed to update project');
       }
     });
   }

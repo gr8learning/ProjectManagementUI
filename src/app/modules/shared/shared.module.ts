@@ -8,6 +8,8 @@ import { ConfirmComponent } from './dialogs/confirm/confirm.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogService } from './services/dialog.service';
+import { SnackbarService } from './services/snackbar.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -21,8 +23,9 @@ import { DialogService } from './services/dialog.service';
     FlexLayoutModule,
     HttpClientModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
-  providers: [AuthService, DialogService]
+  providers: [AuthService, DialogService, SnackbarService]
 })
 export class SharedModule { }
