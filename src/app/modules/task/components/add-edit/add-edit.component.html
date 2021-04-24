@@ -6,7 +6,7 @@
         <mat-card-title *ngIf="!isAdd">Edit Task</mat-card-title>
       </mat-card-header>
       <mat-card-content fxLayout="column">
-        <div fxLayout="row wrap" fxLayoutGap="20px">
+        <div fxLayout="row wrap" fxLayoutGap="20px" class="input-group-padding-bottom">
           <mat-form-field appearance="fill" ngClass.lt-sm="full-width">
             <mat-label>Project ID</mat-label>
             <mat-select formControlName="projectID">
@@ -26,7 +26,7 @@
           </mat-form-field>
 
         </div>
-        <div fxLayout="row" [fxHide]="isAdd">
+        <div fxLayout="row" [fxHide]="isAdd" class="input-group-padding-bottom">
           <mat-form-field appearance="fill" ngClass.lt-sm="full-width">
             <mat-label>Status</mat-label>
             <mat-select formControlName="status">
