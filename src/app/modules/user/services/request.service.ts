@@ -22,7 +22,7 @@ const USER_DATA: IUser[] = [
 })
 export class RequestService {
 
-  dataSource = new MatTableDataSource(USER_DATA);
+  dataSource = new MatTableDataSource([]);
 
   constructor(private globalService: GlobalService) { }
 

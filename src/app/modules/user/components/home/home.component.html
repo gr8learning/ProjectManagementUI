@@ -4,11 +4,17 @@
                        (userDataEmitter)="updateUserRecordById($event)"></app-add-edit-user>
   </div>
   <ng-template #viewData>
-    <div fxLayout="row" mat-ripple class="add-item cursor-pointer" (click)="setSelectedUser()">
-      <mat-icon>add_circle</mat-icon>
-      <div>New User</div>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span mat-ripple fxLayoutAlign="row" (click)="setSelectedUser()" class="add-item cursor-pointer">
+        <mat-icon>add_circle</mat-icon>
+        <div>New User</div>
+      </span>
+      <span mat-ripple fxLayoutAlign="row" (click)="deleteAllUser()" class="delete-all cursor-pointer red" *ngIf="request.dataSource.data.length > 0">
+        <mat-icon>delete_forever</mat-icon>
+        <div>Delete All</div>
+      </span>
     </div>
-    <div fxLayout="row" ngClass.lt-md="overflow-scroll">
+    <div fxLayout="row" ngClass.lt-md="overflow-scroll" *ngIf="request.dataSource.data.length > 0; else noRowData">
       <table mat-table [dataSource]="request.dataSource" matSort class="mat-elevation-z8">
 
         <!-- Position Column -->
@@ -47,5 +53,10 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
+    <ng-template #noRowData>
+      <div fxLayoutAlign="center center" class="font-20px">
+        No Users
+      </div>
+    </ng-template>
   </ng-template>
 </div>

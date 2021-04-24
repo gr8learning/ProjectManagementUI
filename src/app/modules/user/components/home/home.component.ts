@@ -3,6 +3,7 @@ import { MatSort } from '@angular/material/sort';
 import { IUser } from '../../interfaces/iuser';
 import { RequestService } from '../../services/request.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { DialogService } from '../../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-home-user',
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public request: RequestService) {
+  constructor(public request: RequestService, private dialogService: DialogService) {
   }
 
   ngOnInit(): void {
@@ -70,5 +71,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.isAdd = false;
     this.request.dataSource._updateChangeSubscription();
     this.isEditMode = false;
+  }
+
+  deleteAllUser(): void {
+    this.dialogService.openConfirmationDialog((resp) => {
+      if (resp) {
+        this.request.deleteAllUser((deleteResp) => {
+          if (deleteResp.status === 200) {
+            this.request.dataSource = new MatTableDataSource([]);
+            this.request.dataSource._updateChangeSubscription();
+          } else {
+            console.log('Failed to delete all user');
+          }
+        });
+      }
+    });
   }
 }

@@ -17,7 +17,7 @@ export class CommonService {
   }
 
   login(username, password): void {
-    this.cookie.set('username', 'username', 10, '/');
+    this.cookie.set('username', username, 10, '/');
     this.cookie.set('token', btoa(username + ':' + password), 10, '/');
     this.isLoggedIn = true;
     this.name = username;
