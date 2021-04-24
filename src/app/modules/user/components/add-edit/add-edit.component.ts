@@ -101,6 +101,8 @@ export class AddEditComponent implements OnInit {
       if (resp.status === 200) {
         this.userDataEmitter.emit({ user: resp.body, msg: 'success' });
         this.snackbarService.openMessageSnackbar('User updated successfully');
+      } else if (resp.status === 409) {
+        this.snackbarService.openMessageSnackbar('Email update failed as email already registered');
       } else {
         this.snackbarService.openMessageSnackbar('Failed to update user');
       }
