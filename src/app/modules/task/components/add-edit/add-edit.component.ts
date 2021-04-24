@@ -23,7 +23,7 @@ export class AddEditComponent implements OnInit {
     projectID: new FormControl('', []),
     detail: new FormControl('', [Validators.required, Validators.minLength(2)]),
     status: new FormControl('', []),
-    assignedToUser: new FormControl('', [])
+    assignedToUserID: new FormControl('', [])
   });
 
   statusOptions = ['New', 'InProgress', 'QA', 'Completed'];
@@ -64,8 +64,8 @@ export class AddEditComponent implements OnInit {
     return this.taskForm.get('projectID');
   }
 
-  get assignedToUser(): any {
-    return this.taskForm.get('assignedToUser');
+  get assignedToUserID(): any {
+    return this.taskForm.get('assignedToUserID');
   }
 
   get detail(): any {
@@ -87,7 +87,7 @@ export class AddEditComponent implements OnInit {
   addTask(): void {
     const item: ITask = {
       projectID: this.projectID.value,
-      assignedToUserID: this.assignedToUser.value,
+      assignedToUserID: this.assignedToUserID.value,
       detail: this.detail.value,
       status: this.isAdd ? this.statusOptions[0] : this.status.value
     };
@@ -105,7 +105,7 @@ export class AddEditComponent implements OnInit {
     const item: ITask = {
       id: this.taskData.id,
       projectID: this.projectID.value ? this.projectID.value : -1,
-      assignedToUserID: this.assignedToUser.value ? this.assignedToUser.value : -1,
+      assignedToUserID: this.assignedToUserID.value ? this.assignedToUserID.value : -1,
       detail: this.detail.value,
       status: this.status.value
     };

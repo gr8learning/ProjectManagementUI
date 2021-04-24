@@ -18,7 +18,7 @@
 
           <mat-form-field appearance="fill" ngClass.lt-sm="full-width">
             <mat-label>Assigned To User</mat-label>
-            <mat-select formControlName="assignedToUser">
+            <mat-select formControlName="assignedToUserID">
               <mat-option>None</mat-option>
               <mat-option *ngFor="let item of getObjectKeys(userList);" [value]="item">{{userList[item]}}</mat-option>
             </mat-select>
