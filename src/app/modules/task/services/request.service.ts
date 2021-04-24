@@ -22,7 +22,7 @@ const TASK_DATA: ITask[] = [
 })
 export class RequestService {
 
-  dataSource = new MatTableDataSource(TASK_DATA);
+  dataSource = new MatTableDataSource([]);
 
   constructor(private globalService: GlobalService) { }
 

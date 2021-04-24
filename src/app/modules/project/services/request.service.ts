@@ -21,7 +21,7 @@ const PROJECT_DATA: IProject[] = [
 })
 export class RequestService {
 
-  dataSource = new MatTableDataSource(PROJECT_DATA);
+  dataSource = new MatTableDataSource([]);
 
   constructor(private globalService: GlobalService) { }
 

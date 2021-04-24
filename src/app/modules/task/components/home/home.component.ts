@@ -7,6 +7,7 @@ import { RequestService as ProjectRequestService } from '../../../project/servic
 import { RequestService as UserRequestService } from '../../../user/services/request.service';
 import { IIdValue } from '../../../shared/interfaces/iidvalue';
 import { MatTableDataSource } from '@angular/material/table';
+import { DialogService } from '../../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-home-task',
@@ -23,16 +24,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
   userList = {} as IIdValue;
   projectList = {} as IIdValue;
 
+  loaderCount = 0;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public auth: AuthService, public request: RequestService, private projectRequest: ProjectRequestService,
-              private userRequest: UserRequestService) {
+              private userRequest: UserRequestService, private dialogService: DialogService) {
     auth.name = 'Nitin Kumar';
   }
 
   ngOnInit(): void {
     this.projectRequest.getAllProject((resp) => {
       if (resp.status === 200) {
+        this.loaderCount += 1;
         resp.body.forEach((value) => {
           this.projectList[value.id] = value.name;
         });
@@ -44,6 +48,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.userRequest.getAllUser((resp) => {
       if (resp.status === 200) {
+        this.loaderCount += 1;
         resp.body.forEach((value) => {
           this.userList[value.id] = value.firstName + ' ' + value.lastName.toUpperCase();
         });
@@ -57,6 +62,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.request.getAllTask((resp) => {
       if (resp.status === 200) {
+        this.loaderCount += 1;
         this.request.dataSource = new MatTableDataSource(resp.body);
         this.request.dataSource.sort = this.sort;
       }
@@ -107,6 +113,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getProjectById(id): string {
     return id >= 0 ? this.projectList[id] : '';
+  }
+
+  deleteAllTask(): void {
+    this.dialogService.openConfirmationDialog((resp) => {
+      if (resp) {
+        this.request.deleteAllTask((deleteResp) => {
+          if (deleteResp.status === 200) {
+            this.request.dataSource = new MatTableDataSource([]);
+            this.request.dataSource._updateChangeSubscription();
+          } else {
+            console.log('Failed to delete all task');
+          }
+        });
+      }
+    });
   }
 
 }
