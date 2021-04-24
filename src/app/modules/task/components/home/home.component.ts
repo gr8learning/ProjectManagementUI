@@ -35,8 +35,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.projectRequest.getAllProject((resp) => {
+      this.loaderCount += 1;
       if (resp.status === 200) {
-        this.loaderCount += 1;
         resp.body.forEach((value) => {
           this.projectList[value.id] = value.name;
         });
@@ -47,8 +47,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // });
 
     this.userRequest.getAllUser((resp) => {
+      this.loaderCount += 1;
       if (resp.status === 200) {
-        this.loaderCount += 1;
         resp.body.forEach((value) => {
           this.userList[value.id] = value.firstName + ' ' + value.lastName.toUpperCase();
         });
@@ -61,8 +61,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.request.getAllTask((resp) => {
+      this.loaderCount += 1;
       if (resp.status === 200) {
-        this.loaderCount += 1;
         this.request.dataSource = new MatTableDataSource(resp.body);
         this.request.dataSource.sort = this.sort;
       }

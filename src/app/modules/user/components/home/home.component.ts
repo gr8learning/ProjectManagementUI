@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isAdd = false;
   selectedUser: IUser;
 
+  loaderCount = 0;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public request: RequestService, private dialogService: DialogService) {
@@ -27,6 +29,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.request.getAllUser((resp) => {
+      this.loaderCount += 1;
       if (resp.status === 200) {
         this.request.dataSource = new MatTableDataSource(resp.body);
         this.request.dataSource.sort = this.sort;
