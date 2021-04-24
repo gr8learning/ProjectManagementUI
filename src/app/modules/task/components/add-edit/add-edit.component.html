@@ -44,7 +44,7 @@
             <mat-hint>Task details are required!</mat-hint>
             <mat-error *ngIf="detail.invalid && (detail.dirty || detail.touched)">
               <div *ngIf="detail.errors['minlength']; else invalid">
-                Detail must be at least 2 characters long.
+                Detail must be at-least 2 characters long.
               </div>
               <ng-template #invalid>
                 Detail is <strong>Invalid</strong>

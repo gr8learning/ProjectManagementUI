@@ -14,7 +14,7 @@
             <mat-hint>Firstname is required!</mat-hint>
             <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
               <div *ngIf="firstName.errors['minlength']; else invalid">
-                Firstname must be at least 2 characters long.
+                Firstname must be at-least 2 characters long.
               </div>
               <ng-template #invalid>
                 Firstname is <strong>Invalid</strong>
@@ -29,7 +29,7 @@
             <mat-hint>Lastname is required!</mat-hint>
             <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
               <div *ngIf="lastName.errors['minlength']; else invalid">
-                Lastname must be at least 2 characters long.
+                Lastname must be at-least 2 characters long.
               </div>
               <ng-template #invalid>
                 Lastname is <strong>Invalid</strong>
@@ -45,7 +45,7 @@
             <mat-hint>Email is required!</mat-hint>
             <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
               <div *ngIf="email.errors['minlength']; else invalid">
-                Email must be at least 4 characters long.
+                Email must be at-least 4 characters long.
               </div>
               <ng-template #invalid>
                 Email is <strong>Invalid</strong>

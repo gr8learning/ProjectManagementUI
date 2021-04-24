@@ -34,4 +34,8 @@ export class RequestService {
   deleteUserById(id: number, callback): void {
     this.globalService.deleteCall('/user/' + id, null, callback);
   }
+
+  login(payload, callback): void {
+    this.globalService.postCall('/user/login', payload, callback);
+  }
 }

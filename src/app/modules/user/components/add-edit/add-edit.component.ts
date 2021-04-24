@@ -82,6 +82,8 @@ export class AddEditComponent implements OnInit {
       if (resp.status === 200) {
         this.userDataEmitter.emit({ user: resp.body, msg: 'success' });
         this.snackbarService.openMessageSnackbar('User added successfully');
+      } else if (resp.status === 409) {
+        this.snackbarService.openMessageSnackbar('Email already added');
       } else {
         this.snackbarService.openMessageSnackbar('Failed to add user');
       }
