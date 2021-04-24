@@ -35,8 +35,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   deleteUser(item): void {
     // console.log(item);
-    this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
-    this.request.dataSource._updateChangeSubscription();
+    this.request.deleteUserById(item.id, (resp) => {
+      if (resp.status === 200) {
+        this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
+        this.request.dataSource._updateChangeSubscription();
+      } else {
+        console.log('Failed to delete by id');
+      }
+    });
   }
 
   setSelectedUser(user = {} as IUser): void {

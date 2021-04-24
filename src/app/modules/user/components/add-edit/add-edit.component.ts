@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IUser } from '../../interfaces/iuser';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../../../shared/handlers/error-state-matcher';
+import { RequestService } from '../../services/request.service';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -26,7 +27,8 @@ export class AddEditComponent implements OnInit {
     return new MyErrorStateMatcher();
   }
 
-  constructor() { }
+  constructor(private request: RequestService) {
+  }
 
   ngOnInit(): void {
     // console.log(this.userData);
@@ -35,16 +37,25 @@ export class AddEditComponent implements OnInit {
       lastName: this.userData.lastName,
       email: this.userData.email
     });
+    if (!this.isAdd) {
+      this.request.getUserById(this.userData.id, (resp) => {
+        if (resp.status === 200) {
+          this.userForm.setValue(resp.body);
+        } else {
+          console.log('Failed to load user details by id');
+        }
+      });
+    }
   }
 
   emitUser(isCancel = false): void {
-    const item: IUser = {
-      id: this.userData.id,
-      firstName: this.firstName.value,
-      lastName: this.lastName.value,
-      email: this.email.value
-    };
-    this.userDataEmitter.emit({ user: isCancel ? this.userData : item, msg: isCancel ? 'cancel' : 'success' });
+    if (isCancel) {
+      this.userDataEmitter.emit({ user: {} as IUser, msg: 'cancel' });
+    } else if (this.isAdd) {
+      this.addUser();
+    } else {
+      this.updateUser();
+    }
   }
 
   get firstName(): any {
@@ -61,6 +72,37 @@ export class AddEditComponent implements OnInit {
 
   trimValue($event): void {
     $event.target.value = $event.target.value.trim();
+  }
+
+  addUser(): void {
+    const item: IUser = {
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      email: this.email.value
+    };
+    this.request.addUser(item, (resp) => {
+      if (resp.status === 200) {
+        this.userDataEmitter.emit({ user: resp.body, msg: 'success' });
+      } else {
+        this.userDataEmitter.emit({ user: item, msg: 'failed' });
+      }
+    });
+  }
+
+  updateUser(): void {
+    const item: IUser = {
+      id: this.userData.id,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      email: this.email.value
+    };
+    this.request.updateUser(item, (resp) => {
+      if (resp.status === 200) {
+        this.userDataEmitter.emit({ user: resp.body, msg: 'success' });
+      } else {
+        this.userDataEmitter.emit({ user: {} as IUser, msg: 'cancel' });
+      }
+    });
   }
 
 }
