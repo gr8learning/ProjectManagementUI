@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IProject } from '../interfaces/iproject';
 import { MatTableDataSource } from '@angular/material/table';
+import { GlobalService } from '../../shared/services/global.service';
 
 const PROJECT_DATA: IProject[] = [
   { id: 1, name: 'Hydrogen', detail: 'Project Detail', createdOn: 'Tue, 13 Apr 2021 08:58:07 GMT' },
@@ -22,5 +23,9 @@ export class RequestService {
 
   dataSource = new MatTableDataSource(PROJECT_DATA);
 
-  constructor() { }
+  constructor(private globalService: GlobalService) { }
+
+  getAllProject(callback): void {
+    this.globalService.getCall('/project', callback);
+  }
 }

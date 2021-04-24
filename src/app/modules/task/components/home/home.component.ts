@@ -6,6 +6,7 @@ import { RequestService } from '../../services/request.service';
 import { RequestService as ProjectRequestService } from '../../../project/services/request.service';
 import { RequestService as UserRequestService } from '../../../user/services/request.service';
 import { IIdValue } from '../../../shared/interfaces/iidvalue';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-home-task',
@@ -14,7 +15,7 @@ import { IIdValue } from '../../../shared/interfaces/iidvalue';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'projectId', 'assignedToUser', 'detail', 'status', 'createdOn', 'actions'];
+  displayedColumns: string[] = ['id', 'projectID', 'assignedToUser', 'detail', 'status', 'createdOn', 'actions'];
   isEditMode = false;
   isAdd = false;
   selectedTask: ITask;
@@ -30,17 +31,36 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.projectRequest.dataSource.data.forEach((value) => {
-      this.projectList[value.id] = value.name;
+    this.projectRequest.getAllProject((resp) => {
+      if (resp.status === 200) {
+        resp.body.forEach((value) => {
+          this.projectList[value.id] = value.name;
+        });
+      }
     });
+    // this.projectRequest.dataSource.data.forEach((value) => {
+    //   this.projectList[value.id] = value.name;
+    // });
 
-    this.userRequest.dataSource.data.forEach((value) => {
-      this.userList[value.id] = value.firstName + ' ' + value.lastName.toUpperCase();
+    this.userRequest.getAllUser((resp) => {
+      if (resp.status === 200) {
+        resp.body.forEach((value) => {
+          this.userList[value.id] = value.firstName + ' ' + value.lastName.toUpperCase();
+        });
+      }
     });
+    // this.userRequest.dataSource.data.forEach((value) => {
+    //   this.userList[value.id] = value.firstName + ' ' + value.lastName.toUpperCase();
+    // });
   }
 
   ngAfterViewInit(): void {
-    this.request.dataSource.sort = this.sort;
+    this.request.getAllTask((resp) => {
+      if (resp.status === 200) {
+        this.request.dataSource = new MatTableDataSource(resp.body);
+        this.request.dataSource.sort = this.sort;
+      }
+    });
   }
 
   deleteUser(item): void {
@@ -49,12 +69,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.request.dataSource._updateChangeSubscription();
   }
 
-  setSelectedTask(task = {} as ITask ): void {
+  setSelectedTask(task = {} as ITask): void {
     if (!task.id) {
       this.selectedTask = {} as ITask;
       this.selectedTask.id = 1 + Math.max(0, ...Array.from(this.request.dataSource.data, (item) => item.id));
-      this.selectedTask.projectId = -1;
-      this.selectedTask.assignedToUserId = -1;
+      this.selectedTask.projectID = -1;
+      this.selectedTask.assignedToUserID = -1;
       this.selectedTask.detail = '';
       this.selectedTask.status = 'New';
       this.isAdd = true;

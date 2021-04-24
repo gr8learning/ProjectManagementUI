@@ -18,7 +18,7 @@ export class AddEditComponent implements OnInit {
   @Output() taskDataEmitter = new EventEmitter<{ task: ITask, msg: string }>();
 
   taskForm = new FormGroup({
-    projectId: new FormControl('', []),
+    projectID: new FormControl('', []),
     detail: new FormControl('', [Validators.required, Validators.minLength(2)]),
     status: new FormControl('', []),
     assignedToUser: new FormControl('', [])
@@ -39,27 +39,28 @@ export class AddEditComponent implements OnInit {
     // console.log(this.userList);
     // console.log(this.projectList);
     this.taskForm.setValue({
-      projectId: this.taskData.projectId < 0 ? '' : this.taskData.projectId ,
+      projectID: this.taskData.projectID < 0 ? '' : this.taskData.projectID ,
       detail: this.taskData.detail,
       status: this.taskData.status,
-      assignedToUser: this.taskData.assignedToUserId,
+      assignedToUser: this.taskData.assignedToUserID,
     });
   }
 
   emitTask(isCancel = false): void {
     const item: ITask = {
       id: this.taskData.id,
-      projectId: this.projectId.value,
-      assignedToUserId: this.assignedToUser.value,
+      projectID: this.projectID.value,
+      assignedToUserID: this.assignedToUser.value,
       detail: this.detail.value,
       status: this.isAdd ? this.statusOptions[0] : this.status.value,
-      createdOn: this.isAdd ? new Date().toUTCString() : this.taskData.createdOn
+      createdOn: this.isAdd ? new Date().toUTCString() : this.taskData.createdOn,
+      assignedToUser: this.taskData.assignedToUser
     };
     this.taskDataEmitter.emit({ task: isCancel ? this.taskData : item, msg: isCancel ? 'cancel' : 'success' });
   }
 
-  get projectId(): any {
-    return this.taskForm.get('projectId');
+  get projectID(): any {
+    return this.taskForm.get('projectID');
   }
 
   get assignedToUser(): any {

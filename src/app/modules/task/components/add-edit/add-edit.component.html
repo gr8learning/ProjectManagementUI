@@ -9,7 +9,7 @@
         <div fxLayout="row wrap" fxLayoutGap="20px">
           <mat-form-field appearance="fill" ngClass.lt-sm="full-width">
             <mat-label>Project ID</mat-label>
-            <mat-select formControlName="projectId">
+            <mat-select formControlName="projectID">
               <mat-option disabled>None</mat-option>
               <mat-option *ngFor="let item of getObjectKeys(projectList);" [value]="item">{{projectList[item]}}</mat-option>
             </mat-select>

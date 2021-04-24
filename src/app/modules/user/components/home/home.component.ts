@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { IUser } from '../../interfaces/iuser';
 import { RequestService } from '../../services/request.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-home-user',
@@ -24,7 +25,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.request.dataSource.sort = this.sort;
+    this.request.getAllUser((resp) => {
+      if (resp.status === 200) {
+        this.request.dataSource = new MatTableDataSource(resp.body);
+        this.request.dataSource.sort = this.sort;
+      }
+    });
   }
 
   deleteUser(item): void {
@@ -33,7 +39,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.request.dataSource._updateChangeSubscription();
   }
 
-  setSelectedUser(user = {} as IUser ): void {
+  setSelectedUser(user = {} as IUser): void {
     if (!user.id) {
       this.selectedUser = {} as IUser;
       this.selectedUser.id = 1 + Math.max(0, ...Array.from(this.request.dataSource.data, (item) => item.id));

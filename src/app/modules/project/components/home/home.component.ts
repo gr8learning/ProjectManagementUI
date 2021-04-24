@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { IProject } from '../../interfaces/iproject';
 import { RequestService } from '../../services/request.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-home-project',
@@ -24,7 +25,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.request.dataSource.sort = this.sort;
+    this.request.getAllProject((resp) => {
+      if (resp.status === 200) {
+        this.request.dataSource = new MatTableDataSource(resp.body);
+        this.request.dataSource.sort = this.sort;
+      }
+    });
   }
 
   deleteProject(item: IProject): void {

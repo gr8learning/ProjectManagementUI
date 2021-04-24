@@ -1,8 +1,11 @@
+import { IUser } from '../../user/interfaces/iuser';
+
 export interface ITask {
-  projectId: number;
+  projectID: number;
   detail: string;
   id: number;
   status: string;
-  assignedToUserId: number;
+  assignedToUserID: number;
   createdOn: string;
+  assignedToUser: IUser;
 }

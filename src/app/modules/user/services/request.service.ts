@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IUser } from '../interfaces/iuser';
 import { MatTableDataSource } from '@angular/material/table';
+import { GlobalService } from '../../shared/services/global.service';
 
 const USER_DATA: IUser[] = [
   { id: 1, firstName: 'Hydrogen', lastName: 'Kumar', email: 'nitinkumar9054@gmail.com' },
@@ -23,5 +24,9 @@ export class RequestService {
 
   dataSource = new MatTableDataSource(USER_DATA);
 
-  constructor() { }
+  constructor(private globalService: GlobalService) { }
+
+  getAllUser(callback): void {
+    this.globalService.getCall('/user', callback);
+  }
 }

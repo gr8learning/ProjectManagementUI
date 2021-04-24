@@ -18,15 +18,15 @@
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="projectId">
+        <ng-container matColumnDef="projectID">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Project</th>
-          <td mat-cell *matCellDef="let element"> {{getProjectById(element.projectId)}} </td>
+          <td mat-cell *matCellDef="let element"> {{getProjectById(element.projectID)}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="assignedToUser">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> AssignedToUser</th>
-          <td mat-cell *matCellDef="let element"> {{getUserById(element.assignedToUserId)}} </td>
+          <td mat-cell *matCellDef="let element"> {{getUserById(element.assignedToUserID)}} </td>
         </ng-container>
 
         <!-- Name Column -->
