@@ -35,11 +35,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   deleteProject(item: IProject): void {
     // console.log(item);
-    this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
-    this.request.dataSource._updateChangeSubscription();
+    this.request.deleteProjectById(item.id, (resp) => {
+      if (resp.status === 200) {
+        this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
+        this.request.dataSource._updateChangeSubscription();
+      } else {
+        console.log('Failed to delete project by id');
+      }
+    });
   }
 
-  setSelectedProject(project = {} as IProject ): void {
+  setSelectedProject(project = {} as IProject): void {
     if (!project.id) {
       this.selectedProject = {} as IProject;
       this.selectedProject.id = 1 + Math.max(0, ...Array.from(this.request.dataSource.data, (item) => item.id));
@@ -53,7 +59,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.isEditMode = true;
   }
 
-  updateProjectRecordById(updatedProject: {project: IProject, msg: string }): void {
+  updateProjectRecordById(updatedProject: { project: IProject, msg: string }): void {
     const index = this.request.dataSource.data.findIndex((value) => value.id === updatedProject.project.id);
     if (index >= 0) {
       this.request.dataSource.data[index] = updatedProject.project;
