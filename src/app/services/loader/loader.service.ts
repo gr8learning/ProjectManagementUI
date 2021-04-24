@@ -9,7 +9,6 @@ export class LoaderService {
   isLoading = new Subject<boolean>();
 
   constructor() {
-    this.show();
   }
 
   show(): void {
