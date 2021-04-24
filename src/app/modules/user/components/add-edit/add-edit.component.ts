@@ -19,7 +19,7 @@ export class AddEditComponent implements OnInit {
   userForm = new FormGroup({
     firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
     lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    email: new FormControl('', [Validators.required, Validators.minLength(4)])
+    email: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('(.)+[@](.)+[.](.){2,}')])
   });
 
   autocomplete = 'off';

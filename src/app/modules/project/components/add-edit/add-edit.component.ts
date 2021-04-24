@@ -31,14 +31,14 @@ export class AddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.projectForm.setValue({
+    this.projectForm.patchValue({
       name: this.projectData.name,
       detail: this.projectData.detail,
     });
     if (!this.isAdd) {
       this.request.getProjectById(this.projectData.id, (resp) => {
         if (resp.status === 200) {
-          this.projectForm.setValue(resp.body);
+          this.projectForm.patchValue(resp.body);
         }
       });
     }
