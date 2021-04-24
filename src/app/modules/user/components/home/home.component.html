@@ -4,65 +4,60 @@
                        (userDataEmitter)="updateUserRecordById($event)"></app-add-edit-user>
   </div>
   <ng-template #viewData>
-    <div *ngIf="loaderCount > 0; else loading">
-      <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
       <span mat-ripple fxLayoutAlign="row" (click)="setSelectedUser()" class="add-item cursor-pointer">
         <mat-icon>add_circle</mat-icon>
         <div>New User</div>
       </span>
-        <span mat-ripple fxLayoutAlign="row" (click)="deleteAllUser()" class="delete-all cursor-pointer red"
-              *ngIf="request.dataSource.data.length > 0">
+      <span mat-ripple fxLayoutAlign="row" (click)="deleteAllUser()" class="delete-all cursor-pointer red"
+            *ngIf="request.dataSource.data.length > 0">
         <mat-icon>delete_forever</mat-icon>
         <div>Delete All</div>
       </span>
-      </div>
-      <div fxLayout="row" ngClass.lt-md="overflow-scroll" *ngIf="request.dataSource.data.length > 0; else noRowData">
-        <table mat-table [dataSource]="request.dataSource" matSort class="mat-elevation-z8">
-
-          <!-- Position Column -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-          </ng-container>
-
-          <!-- Name Column -->
-          <ng-container matColumnDef="firstName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> FirstName</th>
-            <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-          </ng-container>
-
-          <!-- Weight Column -->
-          <ng-container matColumnDef="lastName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> LastName</th>
-            <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-          </ng-container>
-
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email</th>
-            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions</th>
-            <td mat-cell *matCellDef="let element">
-              <mat-icon (click)="deleteUser(element)" class="cursor-pointer">delete_forever</mat-icon>
-              <mat-icon (click)="setSelectedUser(element)" class="cursor-pointer">edit</mat-icon>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </div>
-      <ng-template #noRowData>
-        <div fxLayoutAlign="center center" class="font-20px">
-          No User
-        </div>
-      </ng-template>
     </div>
-    <ng-template #loading>
-      <div fxLayoutAlign="center">Loading...</div>
+    <div fxLayout="row" ngClass.lt-md="overflow-scroll" *ngIf="request.dataSource.data.length > 0; else noRowData">
+      <table mat-table [dataSource]="request.dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> FirstName</th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> LastName</th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email</th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon (click)="deleteUser(element)" class="cursor-pointer">delete_forever</mat-icon>
+            <mat-icon (click)="setSelectedUser(element)" class="cursor-pointer">edit</mat-icon>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <ng-template #noRowData>
+      <div fxLayoutAlign="center center" class="font-20px">
+        No User
+      </div>
     </ng-template>
   </ng-template>
 </div>
