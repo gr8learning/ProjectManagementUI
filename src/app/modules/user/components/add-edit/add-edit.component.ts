@@ -84,7 +84,7 @@ export class AddEditComponent implements OnInit {
       if (resp.status === 200) {
         this.userDataEmitter.emit({ user: resp.body, msg: 'success' });
       } else {
-        this.userDataEmitter.emit({ user: item, msg: 'failed' });
+        console.log('Failed to add user');
       }
     });
   }
@@ -100,9 +100,8 @@ export class AddEditComponent implements OnInit {
       if (resp.status === 200) {
         this.userDataEmitter.emit({ user: resp.body, msg: 'success' });
       } else {
-        this.userDataEmitter.emit({ user: {} as IUser, msg: 'cancel' });
+        console.log('Failed to update user');
       }
     });
   }
-
 }

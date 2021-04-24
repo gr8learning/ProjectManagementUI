@@ -29,4 +29,24 @@ export class RequestService {
   getAllTask(callback): void {
     this.globalService.getCall('/task', callback);
   }
+
+  getTaskById(id: number, callback): void {
+    this.globalService.getCall('/task/' + id, callback);
+  }
+
+  addTask(payload, callback): void {
+    this.globalService.postCall('/task', payload, callback);
+  }
+
+  updateTask(payload, callback): void {
+    this.globalService.putCall('/task', payload, callback);
+  }
+
+  deleteAllTask(callback): void {
+    this.globalService.deleteCall('/task', null, callback);
+  }
+
+  deleteTaskById(id: number, callback): void {
+    this.globalService.deleteCall('/task/' + id, null, callback);
+  }
 }

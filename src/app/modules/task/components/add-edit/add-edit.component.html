@@ -10,7 +10,7 @@
           <mat-form-field appearance="fill" ngClass.lt-sm="full-width">
             <mat-label>Project ID</mat-label>
             <mat-select formControlName="projectID">
-              <mat-option disabled>None</mat-option>
+              <mat-option>None</mat-option>
               <mat-option *ngFor="let item of getObjectKeys(projectList);" [value]="item">{{projectList[item]}}</mat-option>
             </mat-select>
             <mat-hint>Project ID is optional!</mat-hint>
@@ -19,7 +19,7 @@
           <mat-form-field appearance="fill" ngClass.lt-sm="full-width">
             <mat-label>Assigned To User</mat-label>
             <mat-select formControlName="assignedToUser">
-              <mat-option disabled>None</mat-option>
+              <mat-option>None</mat-option>
               <mat-option *ngFor="let item of getObjectKeys(userList);" [value]="item">{{userList[item]}}</mat-option>
             </mat-select>
             <mat-hint>Assigned to user is optional!</mat-hint>

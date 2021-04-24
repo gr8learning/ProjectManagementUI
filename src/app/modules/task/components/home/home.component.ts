@@ -65,8 +65,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   deleteUser(item): void {
     // console.log(item);
-    this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
-    this.request.dataSource._updateChangeSubscription();
+    this.request.deleteTaskById(item.id, (resp) => {
+      if (resp.status === 200) {
+        this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
+        this.request.dataSource._updateChangeSubscription();
+      }
+    });
   }
 
   setSelectedTask(task = {} as ITask): void {

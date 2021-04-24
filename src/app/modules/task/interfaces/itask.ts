@@ -6,6 +6,6 @@ export interface ITask {
   id?: number;
   status: string;
   assignedToUserID: number;
-  createdOn: string;
-  assignedToUser: IUser;
+  createdOn?: string;
+  assignedToUser?: IUser;
 }

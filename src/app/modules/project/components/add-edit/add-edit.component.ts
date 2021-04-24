@@ -3,7 +3,6 @@ import { IProject } from '../../interfaces/iproject';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../../../shared/handlers/error-state-matcher';
 import { RequestService } from '../../services/request.service';
-import { IUser } from '../../../user/interfaces/iuser';
 
 @Component({
   selector: 'app-add-edit-project',
