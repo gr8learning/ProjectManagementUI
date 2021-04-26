@@ -20,7 +20,7 @@ export class LoginSignupComponent implements OnInit {
   });
   signupForm = new FormGroup({
     firstName: new FormControl('', [Validators.minLength(3), Validators.maxLength(80)]),
-    lastName: new FormControl('', [Validators.minLength(3), Validators.maxLength(80)]),
+    lastName: new FormControl('', [Validators.maxLength(80)]),
     email: new FormControl('', [Validators.email, Validators.pattern('(.)+[@](.)+[.](.)+'), Validators.maxLength(120)]),
     secret: new FormControl('', [Validators.minLength(4), Validators.maxLength(40)]),
     confirmSecret: new FormControl('', [Validators.minLength(4), Validators.maxLength(40), passwordMatchValidator ])

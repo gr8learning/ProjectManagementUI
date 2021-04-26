@@ -25,7 +25,7 @@
           <mat-label>Detail</mat-label>
           <input type="text" matInput formControlName="detail" [errorStateMatcher]="matcher"
                  placeholder="Ex. Great Learning Project" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
-          <mat-hint>Errors appear instantly!</mat-hint>
+          <mat-hint>Enter project details</mat-hint>
           <mat-error *ngIf="detail.invalid && (detail.dirty || detail.touched)">
             <div *ngIf="detail.errors['minlength']; else invalid">
               Detail must be at-least 2 characters long.

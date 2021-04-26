@@ -6,7 +6,7 @@
           <mat-icon>menu</mat-icon>
         </button>
         <button *ngIf="common.isLoggedIn" mat-button color="default" routerLink="/app/profile">
-          Hello, {{common.name.toUpperCase()}}</button>
+          Hello, {{common.name.split('@')[0].toUpperCase()}}</button>
       </div>
       <div fxFlex fxLayout fxLayoutAlign="space-between center" fxHide.xs>
         <div>

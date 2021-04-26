@@ -65,4 +65,12 @@ export class CommonService {
   isUserLoggedIn(): boolean {
     return this.isLoggedIn || this.cookie.check('email');
   }
+
+  dateParse(date: string): string {
+    try {
+      return new Date(date).toLocaleString();
+    } catch {
+      return date;
+    }
+  }
 }

@@ -86,8 +86,8 @@ export class AddEditComponent implements OnInit {
 
   addTask(): void {
     const item: ITask = {
-      projectID: this.projectID.value,
-      assignedToUserID: this.assignedToUserID.value,
+      projectID: this.projectID.value ? this.projectID.value.length === 0 ? -1 : this.projectID.value : -1 ,
+      assignedToUserID: this.assignedToUserID.value ? this.assignedToUserID.value.length === 0 ? -1 : this.assignedToUserID.value : -1,
       detail: this.detail.value,
       status: this.isAdd ? this.statusOptions[0] : this.status.value
     };

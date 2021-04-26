@@ -9,6 +9,7 @@ import { IIdValue } from '../../../shared/interfaces/iidvalue';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { CommonService } from '../../../shared/services/common.service';
 
 @Component({
   selector: 'app-home-task',
@@ -28,7 +29,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public request: RequestService, private projectRequest: ProjectRequestService,
-              private userRequest: UserRequestService, private dialogService: DialogService, private snackbarService: SnackbarService) { }
+              private userRequest: UserRequestService, private dialogService: DialogService,
+              private snackbarService: SnackbarService, public common: CommonService) { }
 
   ngOnInit(): void {
     this.projectRequest.getAllProject((resp) => {
