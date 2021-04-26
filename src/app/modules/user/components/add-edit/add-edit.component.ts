@@ -17,8 +17,8 @@ export class AddEditComponent implements OnInit {
   @Output() userDataEmitter = new EventEmitter<{ user: IUser, msg: string }>();
 
   userForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    firstName: new FormControl('', [Validators.minLength(2), Validators.maxLength(80)]),
+    lastName: new FormControl('', [Validators.maxLength(80)]),
     email: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('(.)+[@](.)+[.](.){2,}')])
   });
 

@@ -71,7 +71,7 @@
             <mat-hint>Firstname is <strong>Required!</strong></mat-hint>
             <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
               <span *ngIf="firstName.errors['minlength'] || firstName.errors['maxlength']; else invalid">
-                Firstname must be 3 to 80 characters long.
+                Firstname must be 2 to 80 characters long.
               </span>
               <ng-template #invalid>
                 <span>Firstname is <strong>Invalid</strong></span>

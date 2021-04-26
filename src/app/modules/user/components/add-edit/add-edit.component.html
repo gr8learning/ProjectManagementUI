@@ -13,8 +13,8 @@
                    placeholder="Ex. Nitin" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
             <mat-hint>Firstname is required!</mat-hint>
             <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
-              <div *ngIf="firstName.errors['minlength']; else invalid">
-                Firstname must be at-least 2 characters long.
+              <div *ngIf="firstName.errors['minlength'] || firstName.errors['maxlength']; else invalid">
+                Firstname must be 2 to 80 characters long.
               </div>
               <ng-template #invalid>
                 Firstname is <strong>Invalid</strong>
@@ -26,11 +26,11 @@
             <mat-label>Lastname</mat-label>
             <input type="text" matInput formControlName="lastName" [errorStateMatcher]="matcher"
                    placeholder="Ex. Kumar" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
-            <mat-hint>Lastname is required!</mat-hint>
+            <mat-hint>Lastname is <strong>optional!</strong></mat-hint>
             <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
-              <div *ngIf="lastName.errors['minlength']; else invalid">
-                Lastname must be at-least 2 characters long.
-              </div>
+              <span *ngIf="lastName.errors['maxlength']; else invalid">
+                Lastname must be less then 80 characters long.
+              </span>
               <ng-template #invalid>
                 Lastname is <strong>Invalid</strong>
               </ng-template>
