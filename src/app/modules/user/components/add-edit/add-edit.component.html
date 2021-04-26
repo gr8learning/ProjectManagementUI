@@ -11,7 +11,7 @@
             <mat-label>Firstname</mat-label>
             <input type="text" matInput formControlName="firstName" [errorStateMatcher]="matcher"
                    placeholder="Ex. Nitin" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
-            <mat-hint>Firstname is required!</mat-hint>
+            <mat-hint>Firstname is <strong>Required!</strong></mat-hint>
             <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
               <div *ngIf="firstName.errors['minlength'] || firstName.errors['maxlength']; else invalid">
                 Firstname must be 2 to 80 characters long.
@@ -26,7 +26,7 @@
             <mat-label>Lastname</mat-label>
             <input type="text" matInput formControlName="lastName" [errorStateMatcher]="matcher"
                    placeholder="Ex. Kumar" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
-            <mat-hint>Lastname is <strong>optional!</strong></mat-hint>
+            <mat-hint>Lastname is <strong>Optional</strong></mat-hint>
             <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
               <span *ngIf="lastName.errors['maxlength']; else invalid">
                 Lastname must be less then 80 characters long.
@@ -42,7 +42,7 @@
             <mat-label>Email</mat-label>
             <input type="text" matInput formControlName="email" [errorStateMatcher]="matcher"
                    placeholder="Ex. user@example.com" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
-            <mat-hint>Email is required!</mat-hint>
+            <mat-hint>Email is <strong>Required!</strong></mat-hint>
             <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
               <div *ngIf="email.errors['minlength']; else invalid">
                 Email must be at-least 4 characters long.

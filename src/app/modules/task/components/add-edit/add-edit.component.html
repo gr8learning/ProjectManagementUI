@@ -13,7 +13,7 @@
               <mat-option>None</mat-option>
               <mat-option *ngFor="let item of getObjectKeys(projectList);" [value]="item">{{projectList[item]}}</mat-option>
             </mat-select>
-            <mat-hint>Project ID is optional!</mat-hint>
+            <mat-hint>Project ID is <strong>Optional</strong></mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="fill" ngClass.lt-sm="full-width">
@@ -22,7 +22,7 @@
               <mat-option>None</mat-option>
               <mat-option *ngFor="let item of getObjectKeys(userList);" [value]="item">{{userList[item]}}</mat-option>
             </mat-select>
-            <mat-hint>Assigned to user is optional!</mat-hint>
+            <mat-hint>Assigned to user is <strong>Optional</strong></mat-hint>
           </mat-form-field>
 
         </div>
@@ -33,7 +33,7 @@
               <mat-option disabled>None</mat-option>
               <mat-option *ngFor="let item of statusOptions;" [value]="item">{{item}}</mat-option>
             </mat-select>
-            <mat-hint>Status is required!</mat-hint>
+            <mat-hint>Status is <strong>Required!</strong></mat-hint>
           </mat-form-field>
         </div>
         <div fxLayout="row">
@@ -41,7 +41,7 @@
             <mat-label>Details</mat-label>
             <input type="text" matInput formControlName="detail" [errorStateMatcher]="matcher"
                    placeholder="Ex. Create user" [autocomplete]="autocomplete" (focusout)="trimValue($event)">
-            <mat-hint>Task details are required!</mat-hint>
+            <mat-hint>Task details are <strong>Required!</strong></mat-hint>
             <mat-error *ngIf="detail.invalid && (detail.dirty || detail.touched)">
               <div *ngIf="detail.errors['minlength']; else invalid">
                 Detail must be at-least 2 characters long.
