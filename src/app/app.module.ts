@@ -22,7 +22,7 @@ import { NoModuleSelectedComponent } from './components/no-module-selected/no-mo
 import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -38,6 +38,8 @@ import { ContactComponent } from './routes/contact/contact.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { ProfileComponent } from './routes/profile/profile.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { ProfileComponent } from './routes/profile/profile.component';
     NoModuleSelectedComponent,
     LoginSignupComponent,
     ContactComponent,
-    ProfileComponent
+    ProfileComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,13 @@ import { ProfileComponent } from './routes/profile/profile.component';
     MatCardModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true
+    }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

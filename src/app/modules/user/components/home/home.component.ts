@@ -2,6 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { IUser } from '../../interfaces/iuser';
 import { RequestService } from '../../services/request.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { DialogService } from '../../../shared/services/dialog.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-home-user',
@@ -17,23 +20,34 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public request: RequestService) {
+  constructor(public request: RequestService, private dialogService: DialogService, private snackbarService: SnackbarService) {
   }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {
-    this.request.dataSource.sort = this.sort;
+    this.request.getAllUser((resp) => {
+      if (resp.status === 200) {
+        this.request.dataSource = new MatTableDataSource(resp.body);
+        this.request.dataSource.sort = this.sort;
+      }
+    });
   }
 
   deleteUser(item): void {
-    // console.log(item);
-    this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
-    this.request.dataSource._updateChangeSubscription();
+    this.request.deleteUserById(item.id, (resp) => {
+      if (resp.status === 200) {
+        this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
+        this.request.dataSource._updateChangeSubscription();
+        this.snackbarService.openMessageSnackbar('User deleted successfully');
+      } else {
+        this.snackbarService.openMessageSnackbar('Failed to delete user');
+      }
+    });
   }
 
-  setSelectedUser(user = {} as IUser ): void {
+  setSelectedUser(user = {} as IUser): void {
     if (!user.id) {
       this.selectedUser = {} as IUser;
       this.selectedUser.id = 1 + Math.max(0, ...Array.from(this.request.dataSource.data, (item) => item.id));
@@ -58,5 +72,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.isAdd = false;
     this.request.dataSource._updateChangeSubscription();
     this.isEditMode = false;
+  }
+
+  deleteAllUser(): void {
+    this.dialogService.openConfirmationDialog((resp) => {
+      if (resp) {
+        this.request.deleteAllUser((deleteResp) => {
+          if (deleteResp.status === 200) {
+            this.request.dataSource = new MatTableDataSource([]);
+            this.request.dataSource._updateChangeSubscription();
+            this.snackbarService.openMessageSnackbar('All users deleted successfully');
+          } else {
+            this.snackbarService.openMessageSnackbar('Failed to delete all user');
+          }
+        });
+      }
+    });
   }
 }

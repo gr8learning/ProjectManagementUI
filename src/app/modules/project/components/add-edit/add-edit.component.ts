@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IProject } from '../../interfaces/iproject';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../../../shared/handlers/error-state-matcher';
+import { RequestService } from '../../services/request.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-add-edit-project',
@@ -25,25 +27,31 @@ export class AddEditComponent implements OnInit {
     return new MyErrorStateMatcher();
   }
 
-  constructor() {
+  constructor(private request: RequestService, private snackbarService: SnackbarService) {
   }
 
   ngOnInit(): void {
-    // console.log(this.projectData);
-    this.projectForm.setValue({
+    this.projectForm.patchValue({
       name: this.projectData.name,
       detail: this.projectData.detail,
     });
+    if (!this.isAdd) {
+      this.request.getProjectById(this.projectData.id, (resp) => {
+        if (resp.status === 200) {
+          this.projectForm.patchValue(resp.body);
+        }
+      });
+    }
   }
 
   emitProject(isCancel = false): void {
-    const item: IProject = {
-      id: this.projectData.id,
-      name: this.name.value,
-      detail: this.detail.value,
-      createdOn: this.isAdd ? new Date().toUTCString() : this.projectData.createdOn
-    };
-    this.projectDataEmitter.emit({ project: isCancel ? this.projectData : item, msg: isCancel ? 'cancel' : 'success' });
+    if (isCancel) {
+      this.projectDataEmitter.emit({ project: {} as IProject, msg: 'cancel' });
+    } else if (this.isAdd) {
+      this.addProject();
+    } else {
+      this.updateProject();
+    }
   }
 
   get name(): any {
@@ -56,5 +64,37 @@ export class AddEditComponent implements OnInit {
 
   trimValue($event): void {
     $event.target.value = $event.target.value.trim();
+  }
+
+  addProject(): void {
+    const item: IProject = {
+      name: this.name.value,
+      detail: this.detail.value
+    };
+    this.request.addProject(item, (resp) => {
+      if (resp.status === 200) {
+        this.projectDataEmitter.emit({ project: resp.body, msg: 'success' });
+        this.snackbarService.openMessageSnackbar('Project added successfully');
+      } else {
+        this.snackbarService.openMessageSnackbar('Failed to add project');
+      }
+    });
+  }
+
+  updateProject(): void {
+    const item: IProject = {
+      id: this.projectData.id,
+      name: this.name.value,
+      detail: this.detail.value,
+      createdOn: this.projectData.createdOn
+    };
+    this.request.updateProject(item, (resp) => {
+      if (resp.status === 200) {
+        this.projectDataEmitter.emit({ project: resp.body, msg: 'success' });
+        this.snackbarService.openMessageSnackbar('Project updated successfully');
+      } else {
+        this.snackbarService.openMessageSnackbar('Failed to update project');
+      }
+    });
   }
 }

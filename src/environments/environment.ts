@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  baseUrl: ''
+  baseUrl: 'http://localhost:8001/api'
+  // baseUrl: 'http://localhost:5000/api'
+  // baseUrl: 'http://localhost:56622/api'
+  // baseUrl: 'http://gr8pm.somee.com/api'
 };
 
 /*

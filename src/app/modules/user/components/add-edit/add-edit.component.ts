@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IUser } from '../../interfaces/iuser';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../../../shared/handlers/error-state-matcher';
+import { RequestService } from '../../services/request.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -15,9 +17,9 @@ export class AddEditComponent implements OnInit {
   @Output() userDataEmitter = new EventEmitter<{ user: IUser, msg: string }>();
 
   userForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    email: new FormControl('', [Validators.required, Validators.minLength(4)])
+    firstName: new FormControl('', [Validators.minLength(2), Validators.maxLength(80)]),
+    lastName: new FormControl('', [Validators.maxLength(80)]),
+    email: new FormControl('', [Validators.required, Validators.minLength(4), Validators.pattern('(.)+[@](.)+[.](.){2,}')])
   });
 
   autocomplete = 'off';
@@ -26,25 +28,32 @@ export class AddEditComponent implements OnInit {
     return new MyErrorStateMatcher();
   }
 
-  constructor() { }
+  constructor(private request: RequestService, private snackbarService: SnackbarService) {
+  }
 
   ngOnInit(): void {
-    // console.log(this.userData);
-    this.userForm.setValue({
+    this.userForm.patchValue({
       firstName: this.userData.firstName,
       lastName: this.userData.lastName,
       email: this.userData.email
     });
+    if (!this.isAdd) {
+      this.request.getUserById(this.userData.id, (resp) => {
+        if (resp.status === 200) {
+          this.userForm.patchValue(resp.body);
+        }
+      });
+    }
   }
 
   emitUser(isCancel = false): void {
-    const item: IUser = {
-      id: this.userData.id,
-      firstName: this.firstName.value,
-      lastName: this.lastName.value,
-      email: this.email.value
-    };
-    this.userDataEmitter.emit({ user: isCancel ? this.userData : item, msg: isCancel ? 'cancel' : 'success' });
+    if (isCancel) {
+      this.userDataEmitter.emit({ user: {} as IUser, msg: 'cancel' });
+    } else if (this.isAdd) {
+      this.addUser();
+    } else {
+      this.updateUser();
+    }
   }
 
   get firstName(): any {
@@ -63,4 +72,40 @@ export class AddEditComponent implements OnInit {
     $event.target.value = $event.target.value.trim();
   }
 
+  addUser(): void {
+    const item: IUser = {
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      email: this.email.value
+    };
+    this.request.addUser(item, (resp) => {
+      if (resp.status === 200) {
+        this.userDataEmitter.emit({ user: resp.body, msg: 'success' });
+        this.snackbarService.openMessageSnackbar('User added successfully');
+      } else if (resp.status === 409) {
+        this.snackbarService.openMessageSnackbar('Email already added');
+      } else {
+        this.snackbarService.openMessageSnackbar('Failed to add user');
+      }
+    });
+  }
+
+  updateUser(): void {
+    const item: IUser = {
+      id: this.userData.id,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      email: this.email.value
+    };
+    this.request.updateUser(item, (resp) => {
+      if (resp.status === 200) {
+        this.userDataEmitter.emit({ user: resp.body, msg: 'success' });
+        this.snackbarService.openMessageSnackbar('User updated successfully');
+      } else if (resp.status === 409) {
+        this.snackbarService.openMessageSnackbar('Email update failed as email already registered');
+      } else {
+        this.snackbarService.openMessageSnackbar('Failed to update user');
+      }
+    });
+  }
 }

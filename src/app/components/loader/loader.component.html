@@ -1,0 +1,4 @@
+<div *ngIf="loaderService.isLoading | async" class="overlay" fxLayoutAlign="center center">
+  <mat-progress-spinner class="spinner" [color]="color" [mode]="mode" [value]="value">
+  </mat-progress-spinner>
+</div>

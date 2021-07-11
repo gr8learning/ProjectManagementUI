@@ -6,6 +6,10 @@ import { RequestService } from '../../services/request.service';
 import { RequestService as ProjectRequestService } from '../../../project/services/request.service';
 import { RequestService as UserRequestService } from '../../../user/services/request.service';
 import { IIdValue } from '../../../shared/interfaces/iidvalue';
+import { MatTableDataSource } from '@angular/material/table';
+import { DialogService } from '../../../shared/services/dialog.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { CommonService } from '../../../shared/services/common.service';
 
 @Component({
   selector: 'app-home-task',
@@ -14,7 +18,7 @@ import { IIdValue } from '../../../shared/interfaces/iidvalue';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'projectId', 'assignedToUser', 'detail', 'status', 'createdOn', 'actions'];
+  displayedColumns: string[] = ['id', 'projectID', 'assignedToUser', 'detail', 'status', 'createdOn', 'actions'];
   isEditMode = false;
   isAdd = false;
   selectedTask: ITask;
@@ -24,37 +28,55 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public auth: AuthService, public request: RequestService, private projectRequest: ProjectRequestService,
-              private userRequest: UserRequestService) {
-    auth.name = 'Nitin Kumar';
-  }
+  constructor(public request: RequestService, private projectRequest: ProjectRequestService,
+              private userRequest: UserRequestService, private dialogService: DialogService,
+              private snackbarService: SnackbarService, public common: CommonService) { }
 
   ngOnInit(): void {
-    this.projectRequest.dataSource.data.forEach((value) => {
-      this.projectList[value.id] = value.name;
+    this.projectRequest.getAllProject((resp) => {
+      if (resp.status === 200) {
+        resp.body.forEach((value) => {
+          this.projectList[value.id] = value.name;
+        });
+      }
     });
 
-    this.userRequest.dataSource.data.forEach((value) => {
-      this.userList[value.id] = value.firstName + ' ' + value.lastName.toUpperCase();
+    this.userRequest.getAllUser((resp) => {
+      if (resp.status === 200) {
+        resp.body.forEach((value) => {
+          this.userList[value.id] = value.firstName + ' ' + value.lastName.toUpperCase();
+        });
+      }
     });
   }
 
   ngAfterViewInit(): void {
-    this.request.dataSource.sort = this.sort;
+    this.request.getAllTask((resp) => {
+      if (resp.status === 200) {
+        this.request.dataSource = new MatTableDataSource(resp.body);
+        this.request.dataSource.sort = this.sort;
+      }
+    });
   }
 
-  deleteUser(item): void {
-    // console.log(item);
-    this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
-    this.request.dataSource._updateChangeSubscription();
+  deleteTask(item): void {
+    this.request.deleteTaskById(item.id, (resp) => {
+      if (resp.status === 200) {
+        this.request.dataSource.data.splice(this.request.dataSource.data.findIndex((value) => value === item), 1);
+        this.request.dataSource._updateChangeSubscription();
+        this.snackbarService.openMessageSnackbar('Task deleted successfully');
+      } else {
+        this.snackbarService.openMessageSnackbar('Failed to delete task');
+      }
+    });
   }
 
-  setSelectedTask(task = {} as ITask ): void {
+  setSelectedTask(task = {} as ITask): void {
     if (!task.id) {
       this.selectedTask = {} as ITask;
       this.selectedTask.id = 1 + Math.max(0, ...Array.from(this.request.dataSource.data, (item) => item.id));
-      this.selectedTask.projectId = -1;
-      this.selectedTask.assignedToUserId = -1;
+      this.selectedTask.projectID = -1;
+      this.selectedTask.assignedToUserID = -1;
       this.selectedTask.detail = '';
       this.selectedTask.status = 'New';
       this.isAdd = true;
@@ -83,6 +105,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getProjectById(id): string {
     return id >= 0 ? this.projectList[id] : '';
+  }
+
+  deleteAllTask(): void {
+    this.dialogService.openConfirmationDialog((resp) => {
+      if (resp) {
+        this.request.deleteAllTask((deleteResp) => {
+          if (deleteResp.status === 200) {
+            this.request.dataSource = new MatTableDataSource([]);
+            this.request.dataSource._updateChangeSubscription();
+            this.snackbarService.openMessageSnackbar('All task deleted successfully');
+          } else {
+            this.snackbarService.openMessageSnackbar('Failed to delete all task');
+          }
+        });
+      }
+    });
   }
 
 }
